@@ -1,17 +1,19 @@
 const express     = require('express');
 const tasks       = express.Router();
 
-let taskData = [];
-//const sendString = (req,res)=>res.send(`showed task ${req.params.id}`)
+/* get the database middleware */
+const db           = require('../models/task');
 
-tasks.route('/:id')
-  .get((req,res)=>res.send(`showed task ${req.params.id}`))
-  .put((req,res)=>res.send(`edited task ${req.params.id}`))
-  .delete((req,res)=>res.send(`deleted task ${req.params.id}`))
+/* convenience method for sending */
+const sendJSONresp = (req,res)=>res.json(res.rows)
+
+tasks.route('/:taskID')
+  .put(db.updateTask, sendJSONresp)
+  .delete(db.deleteTask, (req,res)=>res.send(req.params.taskID))
 
 tasks.route('/')
-  .get((req,res)=>res.send('show tasks'))
-  .post((req,res)=>res.send('posted new task'))
+  .get( db.getTasks, sendJSONresp)
+  .post( db.addTask, sendJSONresp)
 
 
 module.exports = tasks;
