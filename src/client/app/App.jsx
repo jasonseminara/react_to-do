@@ -8,6 +8,10 @@ import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
 import TaskList         from './TaskList.jsx'
 
+import ajax             from '../helpers/ajaxAdapter.js'
+import util             from '../helpers/util.js'
+
+
 // create a React Component called _App_
 export default class App extends React.Component{
 
@@ -27,8 +31,10 @@ export default class App extends React.Component{
   // this is right after the component is mounted on the screen.
   componentDidMount(){
     // go to the db and get the freshest tasks
-
-    // when the data comes back, update the state
+    ajax.getTasks().then( data=>
+      // when the data comes back, update the state
+      this.setState({tasks: data.indexByKey('task_id') })
+    )
   }
 
 
@@ -36,25 +42,28 @@ export default class App extends React.Component{
   addTask( newTask ){
 
     // send this change to the db (ajax)
-    newTask.task_name = newTask.name
-    newTask.task_desc = newTask.desc
-    newTask.completed = false
-    newTask.task_id = Date.now()
+    ajax.createTask(newTask).then( data=>{
 
-    // when the data comes back, update the state.
-    this.state.tasks[newTask.task_id] = newTask
-    this.setState({tasks: this.state.tasks})
+      // when the data comes back, update the state.
+      this.state.tasks[ data[0].task_id ] = data[0]
+      this.setState({tasks: this.state.tasks})
+    })
   }
 
   /* TOGGLE TASK (WE ONLY NEED THE KEY HERE) */
   toggleTask( key ){
+    let myTask = this.state.tasks[key];
 
-    this.state.tasks[key].completed = !this.state.tasks[key].completed;
+    myTask.completed = !myTask.completed;
 
-    //send out this new cahnge to the db (ajax)
+    //send out this new change to the db (ajax)
+    ajax.updateTask( myTask )
+      .then( data=>{
+        this.state.tasks[ data.task_id ] = data
+        this.setState({tasks: this.state.tasks})
+      })
 
-    // bring in ajax data here
-    this.setState({tasks: this.state.tasks})
+
   }
 
 

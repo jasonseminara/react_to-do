@@ -63,7 +63,8 @@ module.exports = {
       task_desc = $/task_desc/,
       completed = $/completed/,
       task_time_start = $/task_time_start/,
-      task_time_end = $/task_time_end/,
+      task_time_end = $/task_time_end/
+
       WHERE task_id = $/tID/
       returning *;  `,
       req.body)
