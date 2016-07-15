@@ -13,11 +13,11 @@ const logger      = require('morgan');
 const path        = require('path');
 
 const app         = express();
-const PORT        = process.argv[2] || process.env.port || 3009;
+const PORT        = process.argv[2] || process.env.port || 3000;
 
 
 // set up some logging
-app.use( logger( 'dev') );
+app.use( logger( DEV ? 'dev' : 'common') );
 
 // we're only going to accept json
 app.use(bodyParser.json());
@@ -25,10 +25,9 @@ app.use(bodyParser.json());
 // bring in the task routes
 app.use( '/tasks', require('./routes/tasks') );
 
+app.use( express.static(path.join(__dirname, 'dist')))
+
+
 // Let's go!
 app.listen(PORT , ()=> console.log(`server here! listening on`, PORT ) )
 
-
-app.get('/', (req,res)=>{
-  res.send('home')
-})
