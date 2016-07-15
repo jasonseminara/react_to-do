@@ -24,7 +24,12 @@ export default class App extends React.Component{
   }
   // note that classes do **not** have commas between their methods
   addTask( newTask ){
-    console.log( newTask )
+    newTask.completed = false
+    newTask.task_id = Date.now()
+
+    this.state.tasks[newTask.task_id] = newTask
+
+    this.setState({tasks: this.state.tasks})
   }
 
 
