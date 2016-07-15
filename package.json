@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Wherein we build a to-do app in React.js",
   "main": "server.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "watch" : "webpack --watch",
+    "prebuild": "npm run clean -s; npm install",
+    "build": "webpack --progress --colors",
     "start": "node server.js"
   },
   "repository": {
@@ -25,6 +29,24 @@
     "pg-promise": "^5.1.3"
   },
   "devDependencies": {
-    "dotenv": "^2.0.0"
+    "babel": "^6.5.2",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "bootstrap": "^3.3.6",
+    "css-loader": "^0.23.1",
+    "dotenv": "^2.0.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "html-webpack-template": "^5.0.0",
+    "react": "^15.2.1",
+    "react-bootstrap": "^0.29.5",
+    "react-dom": "^15.2.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
