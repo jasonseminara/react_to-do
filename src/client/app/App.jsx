@@ -24,8 +24,6 @@ export default class App extends React.Component{
     // we also need to wake up our ancestors
     super();
 
-
-
     // here's our state
     this.state = {
       tasks : {}
@@ -68,8 +66,6 @@ export default class App extends React.Component{
         this.state.tasks[ data.task_id ] = data
         this.setState({tasks: this.state.tasks})
       })
-
-
   }
 
   /* DELETE TASK: We only need the key */
@@ -98,24 +94,33 @@ export default class App extends React.Component{
             {/*OPEN ITEMS*/}
             <article className="col-md-6">
               <h3>Open Items</h3>
+              {/* We'll sort the list by passing a function that returns
+                  all the items that are boolean false.
+                  We'll use this to filter task.completed==false */}
               <TaskList
                 list={this.state.tasks}
-                f={x=>!x}
+                sortBy={x=>!x}
                 action={this.toggleTask.bind(this)}/>
             </article>
+
 
             {/* COMPLETED ITEMS */}
             <article className="col-md-6">
               <h3>Completed Items</h3>
+              {/* We'll sort the list by passing a function that returns
+                  all the items that are boolean true.
+                  We'll use this to filter task.completed==true */}
               <TaskList
                 list={this.state.tasks}
-                f={x=>x}
+                sortBy={x=>x}
                 action={this.toggleTask.bind(this)}
-                deleteTask={this.deleteTask.bind(this)}
-                >
+                deleteTask={this.deleteTask.bind(this)}>
 
-
-                <a className="pull-right" ><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                {/* Children */}
+                {/* Add some delete links to this instance of the list */}
+                <a className="pull-right">
+                  <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
 
               </TaskList>
             </article>

@@ -1,11 +1,10 @@
 import React from 'react';
-require('../images/GA_Stack_Small_RedBlack_RGB.png')
 
 const Footer = props=>
   <footer>
     <div className="footer-copyright">
       <div className="container">
-        <p>Made with <span className="glyphicon glyphicon-heart"></span> by students of <span className="gaLogo"></span></p>
+        <p>Made with <span className="glyphicon glyphicon-heart"></span> by <a href="https://generalassemb.ly/instructors/jason-seminara/6831">Jason Seminara</a> in 2016 for <span className="gaLogo"></span> in New York City.</p>
       </div>
     </div>
   </footer>

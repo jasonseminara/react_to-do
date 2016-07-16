@@ -13,7 +13,7 @@ const logger      = require('morgan');
 const path        = require('path');
 
 const app         = express();
-const PORT        = process.argv[2] || process.env.port || 3000;
+const PORT        = process.argv[2] || process.env.PORT || 3000;
 
 
 // set up some logging

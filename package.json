@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Wherein we build a to-do app in React.js",
   "main": "server.js",
+  "engines": {
+    "node": "6.2.1"
+  },
   "private": true,
   "scripts": {
-    "clean": "rm -rf dist",
-    "watch": "webpack --watch",
-    "prebuild": "npm run clean -s; npm install",
-    "build": "webpack --progress --colors",
-    "start": "node server.js"
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "preinstall": "npm run clean -s && npm i --only=dev --ignore-scripts && webpack -p && rm -rf node_modules && npm i --ignore-scripts",
+    "start": "node server.js",
+    "watch": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
