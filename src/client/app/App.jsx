@@ -1,5 +1,3 @@
-'use strict'
-
 // import the libs we need
 import React            from 'react'
 import ReactDOM         from 'react-dom'
@@ -42,12 +40,13 @@ export default class App extends React.Component{
   addTask( newTask ){
 
     // send this change to the db (ajax)
-    ajax.createTask(newTask).then( data=>{
+    ajax.createTask(newTask)
 
-      // when the data comes back, update the state.
-      this.state.tasks[ data[0].task_id ] = data[0]
-      this.setState({tasks: this.state.tasks})
-    })
+      .then( data=>{
+        // when the data comes back, update the state.
+        this.state.tasks[ data.task_id ] = data
+        this.setState({tasks: this.state.tasks})
+      })
   }
 
   /* TOGGLE TASK (WE ONLY NEED THE KEY HERE) */
@@ -64,6 +63,14 @@ export default class App extends React.Component{
       })
 
 
+  }
+
+  deleteTask(id){
+    ajax.deleteTask(id)
+      .then( task_id=>{
+        delete this.state.tasks[ task_id ];
+        this.setState({tasks: this.state.tasks})
+      })
   }
 
 
@@ -94,7 +101,14 @@ export default class App extends React.Component{
               <TaskList
                 list={this.state.tasks}
                 f={x=>x}
-                action={this.toggleTask.bind(this)}/>
+                action={this.toggleTask.bind(this)}
+                deleteTask={this.deleteTask.bind(this)}
+                >
+
+
+                <a className="pull-right" ><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+
+              </TaskList>
             </article>
 
           </section>

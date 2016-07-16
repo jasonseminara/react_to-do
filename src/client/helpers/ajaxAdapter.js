@@ -1,4 +1,3 @@
-'use strict'
 const ajaxAdapter = {
 
   getTasks(){
@@ -28,15 +27,13 @@ const ajaxAdapter = {
     .then( r=> r.json() )
   },
 
-  deleteTask(task){
-    return fetch(`/tasks/${task.task_id}`,{
+  deleteTask(id){
+    return fetch(`/tasks/${id}`,{
       method:'DELETE',
       headers:{
         "Content-type": "application/json; charset=UTF-8"
-      },
-      body: JSON.stringify(task)
-    })
-    .then( r=> r.json() )
+      }
+    }).then( r=> r.json() )
   },
 
 
