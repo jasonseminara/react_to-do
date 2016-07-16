@@ -6,9 +6,13 @@ import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
 import TaskList         from './TaskList.jsx'
 
-import ajax             from '../helpers/ajaxAdapter.js'
 import util             from '../helpers/util.js'
 
+// This is our AJAX Adapter
+import AjaxAdapter      from '../helpers/AjaxAdapter.js'
+
+// Init the Ajax Adapter, give it the fetch library
+const ajax = new AjaxAdapter(fetch);
 
 // create a React Component called _App_
 export default class App extends React.Component{
@@ -20,6 +24,8 @@ export default class App extends React.Component{
     // we also need to wake up our ancestors
     super();
 
+
+
     // here's our state
     this.state = {
       tasks : {}
@@ -28,7 +34,7 @@ export default class App extends React.Component{
 
   // this is right after the component is mounted on the screen.
   componentDidMount(){
-    // go to the db and get the freshest tasks
+    // go to the db and get all the tasks
     ajax.getTasks().then( data=>
       // when the data comes back, update the state
       this.setState({tasks: data.indexByKey('task_id') })
@@ -58,6 +64,7 @@ export default class App extends React.Component{
     //send out this new change to the db (ajax)
     ajax.updateTask( myTask )
       .then( data=>{
+        // update the state when the data comes back
         this.state.tasks[ data.task_id ] = data
         this.setState({tasks: this.state.tasks})
       })
@@ -65,7 +72,9 @@ export default class App extends React.Component{
 
   }
 
+  /* DELETE TASK: We only need the key */
   deleteTask(id){
+
     ajax.deleteTask(id)
       .then( task_id=>{
         delete this.state.tasks[ task_id ];

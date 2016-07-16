@@ -1,9 +1,13 @@
-const ajaxAdapter = {
+export default class AjaxAdapter{
+
+  constructor(fetch){
+    if(!fetch) throw "We need the Fetch library to make this work, bru.";
+  }
 
   getTasks(){
     return fetch('/tasks')
       .then( r=> r.json() )
-  },
+  }
 
   createTask(newTask){
     return fetch('/tasks',{
@@ -14,7 +18,7 @@ const ajaxAdapter = {
       body: JSON.stringify(newTask)
     })
     .then( r=> r.json() )
-  },
+  }
 
   updateTask(task){
     return fetch(`/tasks/${task.task_id}`,{
@@ -25,7 +29,7 @@ const ajaxAdapter = {
       body: JSON.stringify(task)
     })
     .then( r=> r.json() )
-  },
+  }
 
   deleteTask(id){
     return fetch(`/tasks/${id}`,{
@@ -34,9 +38,6 @@ const ajaxAdapter = {
         "Content-type": "application/json; charset=UTF-8"
       }
     }).then( r=> r.json() )
-  },
-
-
+  }
 
 }
-export default ajaxAdapter
