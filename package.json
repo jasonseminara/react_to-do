@@ -26,6 +26,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-jwt": "^3.4.0",
     "morgan": "^1.7.0",
     "path": "^0.12.7",
     "pg-promise": "^5.1.3"

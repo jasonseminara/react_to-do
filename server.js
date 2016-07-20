@@ -11,11 +11,14 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const logger      = require('morgan');
 const path        = require('path');
+const jwt         = require('express-jwt');
 
 const app         = express();
 const PORT        = process.argv[2] || process.env.PORT || 3000;
+const secret      = 'shhhhhhared-secret'
 
 
+app.use( jwt({secret}) )
 // set up some logging
 app.use( logger( DEV ? 'dev' : 'common') );
 
