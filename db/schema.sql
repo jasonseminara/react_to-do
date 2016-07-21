@@ -14,3 +14,15 @@ CREATE TABLE tasks (
 CREATE INDEX on tasks (completed) ;
 CREATE INDEX on tasks (task_time_start) ;
 CREATE INDEX on tasks (task_created) ;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  user_id serial unique primary key,
+  name VARCHAR(50) unique,
+  email VARCHAR(255) unique not null,
+  password_digest TEXT not null,
+  user_created timestamp not null default now()
+);
+CREATE INDEX on users (username) ;
+CREATE INDEX on users (email) ;
+

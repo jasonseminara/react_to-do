@@ -11,14 +11,12 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const logger      = require('morgan');
 const path        = require('path');
-const jwt         = require('express-jwt');
 
 const app         = express();
 const PORT        = process.argv[2] || process.env.PORT || 3000;
-const secret      = 'shhhhhhared-secret'
 
+app.set('superSecret', 'my super secret word')
 
-app.use( jwt({secret}) )
 // set up some logging
 app.use( logger( DEV ? 'dev' : 'common') );
 
@@ -26,6 +24,7 @@ app.use( logger( DEV ? 'dev' : 'common') );
 app.use(bodyParser.json());
 
 // bring in the task routes
+app.use( '/api',   require('./routes/api')   );
 app.use( '/tasks', require('./routes/tasks') );
 
 app.use( express.static(path.join(__dirname, 'dist')))

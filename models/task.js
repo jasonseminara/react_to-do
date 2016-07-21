@@ -1,17 +1,4 @@
-'use strict'
-const pg = require('pg-promise')({
-// Initialization Options
-});
-
-const config = process.env.DATABASE_URL || {
-  host:       process.env.DB_HOST,
-  port:       process.env.DB_PORT,
-  database:   process.env.DB_NAME,
-  user:       process.env.DB_USER,
-  password:   process.env.DB_PASS,
-};
-
-const _db = pg(config);
+const _db = require('./connection');
 
 module.exports = {
 
@@ -33,8 +20,10 @@ module.exports = {
   /* creates a new task, returns the newly created record */
   addTask(req, res, next) {
     console.log('===addTask===',req.body)
-    _db.one(
-      `INSERT INTO tasks (task_name, task_desc) VALUES ($1, $2) returning *;` ,
+    _db.one(`
+      INSERT INTO tasks (task_name, task_desc)
+      VALUES ($1, $2)
+      returning *;` ,
       [ req.body.name , req.body.desc ]
       )
       .then( task=>{
@@ -52,8 +41,6 @@ module.exports = {
 
     // tID is invented here
     req.body.tID = Number.parseInt(req.params.taskID);
-
-
 
     req.body.completed = !!req.body.completed;
 

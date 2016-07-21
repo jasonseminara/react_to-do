@@ -2,7 +2,8 @@ const express     = require('express');
 const tasks       = express.Router();
 
 /* get the database middleware */
-const db           = require('../models/task');
+const db = require('../models/task')
+
 
 /* convenience method for sending */
 const sendJSONresp = (req,res)=>res.json(res.rows)
