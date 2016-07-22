@@ -14,6 +14,8 @@ const path        = require('path');
 
 const app         = express();
 const PORT        = process.argv[2] || process.env.PORT || 3000;
+// must be first!
+app.use(require('compression')())
 
 app.set('superSecret', 'my super secret word')
 
@@ -34,3 +36,6 @@ app.use( express.static(path.join(__dirname, 'dist')))
 // Let's go!
 app.listen(PORT , ()=> console.log(`server here! listening on`, PORT ) )
 
+app.get('*', (req, res)=>
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+)

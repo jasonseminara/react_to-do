@@ -7,15 +7,27 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BUILD_DIR         = path.resolve(__dirname, 'dist');
 const APP_DIR           = path.resolve(__dirname, 'src/client/app');
 
-module.exports = {
+const config = {
   entry: `${APP_DIR}/main.jsx`,
   output: {
     path: BUILD_DIR,
     filename: '/js/[name].js',
   },
 
+  cache: true,
+  debug: true,
+  devtool: 'eval-source-map',
+  stats: {
+    colors: true,
+    reasons: true
+  },
+
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('/js/common.js'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      }
+    }),
     new HtmlWebpackPlugin({
       title: 'Tasks',
       xhtml: true,
@@ -29,7 +41,6 @@ module.exports = {
   ],
 
   module : {
-    include: path.join(__dirname, 'src'),
     loaders: [
       { test: /\.css$/,  loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
       { test: /\.(png|gif|jpg)$/,  loader: 'file-loader?name=/images/[name].[ext]' },
@@ -54,3 +65,29 @@ module.exports = {
   }
 };
 
+if( process.env &&
+  process.env.NODE_ENV &&
+  process.env.NODE_ENV == 'production'){
+
+  const prodPlugins = [
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        warnings: true
+      },
+      output: {
+        comments: false,
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin('/js/common.js')
+  ]
+
+  config.plugins = config.plugins.concat(prodPlugins)
+
+  config.cache= false;
+  config.debug= false;
+  config.devtool= undefined;
+
+
+}
+
+ module.exports = config;
