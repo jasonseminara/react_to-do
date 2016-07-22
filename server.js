@@ -23,9 +23,10 @@ app.use( logger( DEV ? 'dev' : 'common') );
 // we're only going to accept json
 app.use(bodyParser.json());
 
-// bring in the task routes
-app.use( '/api',   require('./routes/api')   );
-app.use( '/tasks', require('./routes/tasks') );
+// bring in the  routes
+app.use( '/api',        require('./routes/api')   );
+app.use( '/api/users',  require('./routes/users') );
+app.use( '/tasks',      require('./routes/tasks') );
 
 app.use( express.static(path.join(__dirname, 'dist')))
 
