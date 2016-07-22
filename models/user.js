@@ -2,14 +2,15 @@ const _db     = require('./connection');
 const bcrypt  = require('bcrypt');
 const salt    = bcrypt.genSaltSync(10);
 
-function createSecure(email, password, callback) {
-  bcrypt.genSalt(function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash){
-      console.log(email,hash)
-      callback(email, hash)
-    })
-  })
-}
+
+const createSecure = (password)=>
+  new Promise( (resolve,reject)=>
+    bcrypt.genSalt( (err, salt)=>
+      bcrypt.hash(password, salt, (err, hash)=>
+        err? reject(err) : resolve(hash)
+      )
+    )
+  )
 
 
 module.exports = {
@@ -34,6 +35,7 @@ module.exports = {
         next()
 
       })
+      /* NOTE: NO USERS or all ERRORS*/
       .catch( error=>{
         console.error('Error ', error);
         res.error = error
@@ -54,25 +56,26 @@ module.exports = {
   },
 
   createUser(req, res, next) {
-    createSecure(req.body.email, req.body.password, saveUser);
 
-    function saveUser(email, hash) {
-    _db.one(`
-      INSERT INTO users
-      (email, password_digest)
-      VALUES ($1, $2)
-      returning *;`,[email, hash]
-      )
-      .then( newUser=> {
-        console.log(newUser)
-        res.user = newUser;
-        next()
-      })
-      .catch( err=> {
-        console.log('error signing up', err)
-        next()
-      })
-    }
+    createSecure(req.body.password)
+      .then( hash=>{
+        _db.one(`
+          INSERT INTO users (email, password_digest)
+          VALUES ($1, $2)
+          returning *;`,[req.body.email, hash]
+        )
+        .then( newUser=> {
+          console.log(newUser)
+          res.user = newUser;
+          next()
+        })
+        .catch( err=> {
+          console.log('error signing up', err)
+          next()
+        })
+
+      });
+
   },
 
 

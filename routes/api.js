@@ -7,7 +7,7 @@ const tokenService      = require('../service/tokenService')
 /* get the database middleware */
 const userService = require('../models/user')
 
-const sendError = (err,req,res,next)=>res.status(500).json(err)
+const sendError = (err,req,res,next)=>res.status(401).json(err)
 
 /* This is whre the user logs in */
 api.post('/authenticate',
