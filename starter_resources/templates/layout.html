@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Example Template</title>
+  <link rel="stylesheet" href="">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<container>
+  <header>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="http://ga.co" class="navbar-brand"><img alt="Brand" src="GA_logo.png" class="headerLogo"></a>
+        </div>
+
+        <p class="navbar-text gaDisplayFont">React To-Do Demo</p>
+        <p class="navbar-text navbar-right navbar-last">Signed in as <a href="#" class="navbar-link"> Guest </a> <span class="glyphicon glyphicon-user"></span></p>
+
+        <a href="https://github.com/ga-wdi-exercises/react_to-do"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <section class="jumbotron">
+      <h1>Task Manager</h1>
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="sr-only" for="task_name">Task Name</label>
+          <input type="text" class="form-control input-lg" id="task_name" placeholder="Task Name">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="task_desc">Task Description</label>
+          <input type="text" class="form-control input-lg" id="task_desc" placeholder="Task Description">
+        </div>
+
+        <button type="submit" class="btn btn-info btn-lg">Save</button>
+      </form>
+    </section>
+
+    <section class="row">
+      <article class="col-md-6">
+        <h3>Open Items</h3>
+        <div class="list-group">
+          <button type="button" class="list-group-item" title="Click to Complete"><strong>Cras</strong> justo odio</button>
+          <button type="button" class="list-group-item" title="Click to Complete"><strong>Dapibus</strong> ac facilisis in</button>
+          <button type="button" class="list-group-item" title="Click to Complete"><strong>Morbi</strong> leo risus</button>
+          <button type="button" class="list-group-item" title="Click to Complete"><strong>Porta</strong> ac consectetur ac</button>
+          <button type="button" class="list-group-item" title="Click to Complete"><strong>Vestibulum</strong> at eros</button>
+        </div>
+      </article>
+
+      <article class="col-md-6">
+        <h3>Completed Items</h3>
+        <div class="list-group">
+          <button type="button" class="list-group-item" title="Click to Reopen"><strong>Cras</strong> justo odio<a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></button>
+          <button type="button" class="list-group-item" title="Click to Reopen"><strong>Dapibus</strong> ac facilisis in<a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></button>
+          <button type="button" class="list-group-item" title="Click to Reopen"><strong>Morbi</strong> leo risus<a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></button>
+          <button type="button" class="list-group-item" title="Click to Reopen"><strong>Porta</strong> ac consectetur ac<a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></button>
+          <button type="button" class="list-group-item" title="Click to Reopen"><strong>Vestibulum</strong> at eros<a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></button>
+        </div>
+      </article>
+    </section>
+
+    </div>
+    <footer>
+      <div class="footer-copyright">
+        <div class="container">
+          <p>Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://generalassemb.ly/instructors/jason-seminara/6831">Jason Seminara</a> in 2016 for <span class="gaLogo"></span> in New York City.</p>
+        </div>
+      </div>
+    </footer>
+  </container>
+</body>
+</html>
