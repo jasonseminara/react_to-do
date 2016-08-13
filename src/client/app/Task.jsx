@@ -14,9 +14,7 @@ const Task = props=>
   </button>
 
 Task.propTypes = {
-  task: React.PropTypes.object.isRequired,
-  onClick: React.PropTypes.func.isRequired,
-  children:React.PropTypes.array,
+  onClick: React.PropTypes.func.isRequired
 };
 
 export default Task

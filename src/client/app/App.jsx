@@ -6,6 +6,8 @@ import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
 import TaskList         from './TaskList.jsx'
 import DeleteButton     from './DeleteButton.jsx'
+import EditButton     from './EditButton.jsx'
+import Task from './Task.jsx'
 
 // create a React Component called _App_
 export default class App extends React.Component{
@@ -55,6 +57,9 @@ export default class App extends React.Component{
       return previousState
     })
   }
+  convertEdit(task_id){
+
+  }
 
   deleteTask(task_id){
     this.setState( previousState=>{
@@ -80,8 +85,11 @@ export default class App extends React.Component{
               <h3>Open Items</h3>
               <TaskList
                 tasks={this.state.tasks}
-                filter={task=>!task.completed&&!task.deleted}
-                buttonClick={this.toggleTask.bind(this)}/>
+                filter={task=>!task.completed&&!task.deleted}>
+
+                <Task onClick={key=>this.toggleTask.bind(this,key)} />
+
+              </TaskList>
             </article>
 
 
@@ -90,21 +98,28 @@ export default class App extends React.Component{
               <h3>Completed Items</h3>
               <TaskList
                 tasks={this.state.tasks}
-                filter={task=>!!task.completed&&!task.deleted }
-                buttonClick={this.toggleTask.bind(this)}>
+                filter={task=>!!task.completed&&!task.deleted }>
 
-                <DeleteButton click={this.deleteTask.bind(this)} />
+                {/*This will be repeated*/}
+                <Task onClick={key=>this.toggleTask.bind(this,key)} >
+                  <DeleteButton onClick={key=>this.deleteTask.bind(this,key)} />
+                  <EditButton onClick={key=>this.convertEdit.bind(this,key)} onSave={event=>console.log(event.target)}/>
+                </Task>
 
               </TaskList>
             </article>
+
 
           {/* DELETED ITEMS */}
             <article className="col-md-2">
               <h3>Deleted Items</h3>
               <TaskList
                 tasks={this.state.tasks}
-                filter={task=>!!task.deleted}
-                buttonClick={this.deleteTask.bind(this)}/>
+                filter={task=>!!task.deleted}>
+
+                <Task onClick={key=>this.deleteTask.bind(this,key)} />
+
+              </TaskList>
             </article>
           </section>
         </div>

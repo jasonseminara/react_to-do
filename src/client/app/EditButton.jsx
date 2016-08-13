@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DeleteButton = props=>{
+const EditButton = props=>{
 
   const handleClick = event=>{
     /* kill the link action here */
@@ -11,7 +11,7 @@ const DeleteButton = props=>{
 
   return (
     <a href="#" className="pull-right" onClick={handleClick}>
-      <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </a>
   )
 }
@@ -19,4 +19,4 @@ const DeleteButton = props=>{
 /* PROP TYPES */
 
 
-export default DeleteButton
+export default EditButton
