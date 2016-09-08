@@ -1,5 +1,6 @@
-import TaskForm from './TaskForm.jsx'
-import Task from './Task.jsx'
+import React      from 'react'
+import TaskForm   from './TaskForm.jsx'
+import Task       from './Task.jsx'
 
 /* This is a composite component that can be toggled open or closed, depending on its state */
 const ToggleableTask = props=>{

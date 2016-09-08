@@ -1,5 +1,6 @@
 // import the libs we need
-import ReactDOM         from 'react-dom'
+import React            from 'react'
+
 import Nav              from './Nav.jsx'
 import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
@@ -8,6 +9,8 @@ import IconButton       from './IconButton.jsx'
 import ToggleableTask   from './ToggleableTask.jsx'
 /*model*/
 import Task             from './model/Task'
+
+
 
 // create a React Component called _App_
 export default class App extends React.Component{
@@ -24,6 +27,14 @@ export default class App extends React.Component{
     this.state = {
       tasks : {}
     }
+
+    this.addTask         = this.addTask.bind(this)
+    this.updateTask      = this.updateTask.bind(this)
+    this.toggleForm      = this.toggleField.bind(this,'formOpen')
+    this.toggleCompleted = this.toggleField.bind(this,'completed')
+    this.toggleDelete    = this.toggleField.bind(this,'deleted')
+    this.hardDelete      = this.hardDelete.bind(this)
+
   }
 
 
@@ -39,6 +50,8 @@ export default class App extends React.Component{
 
   }
 
+
+  /* UPDATE a task */
   updateTask( id,name,desc ){
 
     const newState = {...this.state.tasks}
@@ -49,34 +62,21 @@ export default class App extends React.Component{
 
   }
 
-  toggleTaskForm(id){
+  /* Toggle any field on a Task */
+  toggleField(fieldName,id){
     const newState = {...this.state.tasks}
-    newState[id].formOpen = !newState[id].formOpen
+    newState[id][fieldName] = !newState[id][fieldName]
     this.setState({tasks:newState})
   }
 
-  getTask(id){
-    return this.state.tasks[id]
+  /* Hard delete on a Task */
+  hardDelete(id){
+    const newState = {...this.state.tasks}
+    delete newState[id]
+    this.setState({tasks:newState})
   }
 
-  /*TODO: THIS SHOULD BE REFACTORED, since these are 99% identical */
 
-  /* open/close a task. Note, we only need to ID to make this work */
-  toggleCompleted(taskID){
-    this.setState( previousState=>{
-      // toggle the completed state of the task
-      previousState.tasks[taskID].completed = !previousState.tasks[taskID].completed
-      return previousState
-    })
-  }
-
-  toggleDelete(taskID){
-    this.setState( previousState=>{
-      // toggle the completed state of the task
-      previousState.tasks[taskID].deleted = !previousState.tasks[taskID].deleted
-      return previousState
-    })
-  }
 
   // 90% of your components will render()
   // REMEMBER you can only return **one** root element from a render fn.
@@ -95,14 +95,14 @@ export default class App extends React.Component{
             <section className="jumbotron">
               <h1>Task Manager</h1>
 
-              <TaskForm saveTask={this.addTask.bind(this)} task={{}}>
+              <TaskForm saveTask={this.addTask} task={{}}>
                 <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
               </TaskForm>
 
             </section>
 
             {/*OPEN ITEMS*/}
-            <article className="col-md-5">
+            <article className="col-sm-5">
               <h3>Open Items</h3>
 
               <TaskList
@@ -110,11 +110,11 @@ export default class App extends React.Component{
                 items={this.state.tasks}>
 
                 <ToggleableTask
-                  saveTask={this.updateTask.bind(this)}
-                  closeTaskForm={this.toggleTaskForm.bind(this)}
-                  onClick={this.toggleCompleted.bind(this)}>
+                  saveTask={this.updateTask}
+                  closeTaskForm={this.toggleForm}
+                  onClick={this.toggleCompleted}>
                   <IconButton
-                    onClick={this.toggleTaskForm.bind(this)} icon="pencil" />
+                    onClick={this.toggleForm} icon="pencil" />
                 </ToggleableTask>
 
               </TaskList>
@@ -123,7 +123,7 @@ export default class App extends React.Component{
 
 
             {/* COMPLETED ITEMS */}
-            <article className="col-md-5">
+            <article className="col-sm-5">
               <h3>Completed Items</h3>
 
               <TaskList
@@ -131,12 +131,12 @@ export default class App extends React.Component{
                 items={this.state.tasks}>
 
                 <ToggleableTask
-                  onClick={this.toggleCompleted.bind(this)}
-                  saveTask={this.updateTask.bind(this)}
-                  closeTaskForm={this.toggleTaskForm.bind(this)}>
+                  onClick={this.toggleCompleted}
+                  saveTask={this.updateTask}
+                  closeTaskForm={this.toggleForm}>
 
-                  <IconButton onClick={this.toggleDelete.bind(this)} icon="trash" />
-                  <IconButton onClick={this.toggleTaskForm.bind(this)} icon="pencil" />
+                  <IconButton onClick={this.toggleDelete} icon="trash" />
+                  <IconButton onClick={this.toggleForm} icon="pencil" />
 
                 </ToggleableTask>
 
@@ -145,15 +145,15 @@ export default class App extends React.Component{
 
 
           {/* DELETED ITEMS */}
-            <article className="col-md-2">
+            <article className="col-sm-2">
               <h3>Deleted Items</h3>
 
               <TaskList
                 filter={task=>!!task.deleted}
                 items={this.state.tasks}>
 
-                <ToggleableTask onClick={this.toggleDelete.bind(this)}>
-                  <IconButton onClick={this.toggleDelete.bind(this)} icon="remove" />
+                <ToggleableTask onClick={this.toggleDelete}>
+                  <IconButton onClick={this.hardDelete} icon="remove" />
                 </ToggleableTask>
 
               </TaskList>
@@ -171,6 +171,3 @@ export default class App extends React.Component{
       )
   }
 }
-
-// mount our App at #container
-ReactDOM.render(<App/>, document.querySelector('#container'))

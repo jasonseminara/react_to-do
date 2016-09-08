@@ -1,31 +1,31 @@
-function cloneItem(taskID, props, propsContext){
+import React from 'react'
+
+function cloneItem(taskID, props, extraProps){
   return React.Children.map( props.children, child=>
     /* props.children is READ-ONLY so we have to clone the child in order to give it an ID*/
     React.cloneElement(
       child,
-      propsContext,
-      cloneItem(taskID, child.props, propsContext)
+      extraProps,
+      cloneItem(taskID, child.props, extraProps)
     )
   )
 }
 
-const TaskList = props=>{
-
+const TaskList = props=>
   /* Loop over the items, fiter out items we dont want and render using the functions above */
-  return (
-    <div className="list-group">
-      {Object.keys(props.items)
-        .filter( taskID=> props.filter(props.items[taskID]) )
-        .map( taskID=>
-          cloneItem(taskID, props, {
-            id:taskID,
-            task:props.items[taskID]
-          })
-        )
-      }
-    </div>
-  )
-}
+  <div className="list-group">
+    {Object.keys(props.items)
+      .filter( taskID=> props.filter(props.items[taskID]) )
+      .map( taskID=>
+
+        cloneItem(taskID, props, {
+          id:taskID,
+          task:props.items[taskID]
+        })
+
+      )
+    }
+  </div>
 
 
 

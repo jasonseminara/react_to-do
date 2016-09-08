@@ -1,9 +1,12 @@
+import React from 'react';
+
 const TaskForm = props=> {
 
   const size = props.size || 'lg'
 
   const handleSubmit = event=>{
     event.preventDefault();
+
     // fired the App's prop function
     props.saveTask(
       event.target.elements.taskName.value,
@@ -37,15 +40,17 @@ const TaskForm = props=> {
   )
 
 }
+
 /* PROP TYPES */
 TaskForm.propTypes={
-  saveTask: React.PropTypes.func.isRequired,
-  task: React.PropTypes.object.isRequired,
+  saveTask:   React.PropTypes.func.isRequired,
+  task:       React.PropTypes.object.isRequired,
+
   /* we might have a child, or an array of children*/
   children:   React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
-    ]).isRequired
+                React.PropTypes.arrayOf(React.PropTypes.node),
+                React.PropTypes.node
+              ]).isRequired
 }
 
 export default TaskForm
