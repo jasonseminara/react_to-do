@@ -1,3 +1,6 @@
+/*Task.jsx*/
+// @description Task is implemented as an HTML button
+
 const Task = props=>
   /* pass props down from our parent */
   <button type="button"
@@ -5,7 +8,7 @@ const Task = props=>
     onClick={event=>props.onClick(props.id)}>
 
     {/* text on the button */}
-    <strong>{props.task.task_name}</strong> {props.task.task_desc}
+    <strong>{props.task.taskName}</strong> {props.task.taskDesc}
 
     {/* any children given to me shall be rendered here */}
     {props.children}

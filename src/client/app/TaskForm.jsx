@@ -6,12 +6,15 @@ const TaskForm = props=> {
     event.preventDefault();
     // fired the App's prop function
     props.saveTask(
-      event.target.elements.task_name.value,
-      event.target.elements.task_desc.value
+      event.target.elements.taskName.value,
+      event.target.elements.taskDesc.value
     );
 
     // clear the form
     event.target.reset();
+
+    // just for completeness, we should return something
+    return false;
   }
 
 
@@ -19,13 +22,13 @@ const TaskForm = props=> {
       <form className="form-inline" onSubmit={handleSubmit}>
 
         <div className="form-group">
-          <label className="sr-only" htmlFor="task_name">Task Name</label>
-          <input type="text" className={`form-control input-${size}`} name="task_name" placeholder="Task Name" defaultValue={props.task.task_name}/>
+          <label className="sr-only" htmlFor="taskName">Task Name</label>
+          <input type="text" className={`form-control input-${size}`} name="taskName" placeholder="Task Name" defaultValue={props.task.taskName}/>
         </div>
 
         <div className="form-group">
-          <label className="sr-only" htmlFor="task_desc">Task Description</label>
-          <input type="text" className={`form-control input-${size}`} name="task_desc" placeholder="Task Description" defaultValue={props.task.task_desc}/>
+          <label className="sr-only" htmlFor="taskDesc">Task Description</label>
+          <input type="text" className={`form-control input-${size}`} name="taskDesc" placeholder="Task Description" defaultValue={props.task.taskDesc}/>
         </div>
 
         {props.children}

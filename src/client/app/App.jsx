@@ -43,8 +43,8 @@ export default class App extends React.Component{
 
     const newState = {...this.state.tasks}
 
-    newState[id].task_name = name
-    newState[id].task_desc = desc
+    newState[id].taskName = name
+    newState[id].taskDesc = desc
     this.setState({tasks:newState})
 
   }
