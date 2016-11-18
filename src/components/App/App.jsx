@@ -3,6 +3,7 @@ import Nav       from '../Nav/Nav';
 import TaskForm  from '../TaskForm';
 import Footer    from '../Footer/Footer';
 import TaskList  from '../TaskList';
+import AjaxAdapter from '../../helpers/AjaxAdapter';
 
 import './App.css';
 import './GA_gear.png';
@@ -20,17 +21,15 @@ export default class App extends React.Component {
     this.addTask = this.addTask.bind(this);
   }
 
+  // this is right after the component is mounted on the screen
+  componentDidMount() {
+    AjaxAdapter.getTasks().then(data => console.log(data))
+  }
+
   addTask(name, desc) {
 
-    fetch('/tasks', {
-      method: 'post',
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      },
-      body: JSON.stringify({name, desc})
-    })
-      .then(r => r.json())
-      .then((newTask) => {
+    AjaxAdapter.createTask({name, desc})
+    .then((newTask) => {
         // clone existing state
         const newState = {...this.state.tasks};
         newState[newTask.id] = newTask;
