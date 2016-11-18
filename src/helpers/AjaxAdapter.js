@@ -1,9 +1,16 @@
-export default class AjaxAdapter{
+function indexByKeyName(arr, keyName) {
+  return arr.reduce((obj, el) => {
+    obj[el[keyName]] = el;
+    return obj;
+  }, {});
+}
 
+export default class AjaxAdapter{
 
   static getTasks() {
     return fetch('/tasks')
-    .then(r => r.json());
+    .then(r => r.json())
+    .then(data => indexByKeyName(data, 'id'));
   }
 
   static createTask(newTask) {
