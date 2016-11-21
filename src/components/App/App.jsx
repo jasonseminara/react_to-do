@@ -11,7 +11,7 @@ import './GA_gear.png';
 
 export default class App extends React.Component {
 
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {

@@ -4,12 +4,19 @@ export default function TaskForm(props) {
   const handleSubmit = (event) => {
     // stop the event from leaving the form
     event.preventDefault();
+
+    // get a pointer to the form
     const myForm = event.target;
 
+    // fired the App's task function
     props.addTask(
       myForm.taskName.value,
       myForm.taskDesc.value
     );
+
+    // clear the form
+    event.target.reset();
+
     return false;
   };
 
@@ -30,3 +37,7 @@ export default function TaskForm(props) {
   );
 }
 
+/* PROP TYPES */
+TaskForm.propTypes = {
+  addTask: React.PropTypes.func.isRequired,
+};
