@@ -11,4 +11,13 @@ const Task = props => (
   </button>
 );
 
+
+/* PROP TYPES */
+Task.PropTypes = {
+  title: React.PropTypes.string.isRequired,
+  desc:  React.PropTypes.string.isRequired,
+  click: React.PropTypes.func.isRequired,
+};
+
+
 export default Task;

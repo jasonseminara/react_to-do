@@ -1,15 +1,19 @@
-import React     from 'react';
-import Nav       from '../Nav/Nav';
-import TaskForm  from '../TaskForm';
-import Footer    from '../Footer/Footer';
-import TaskList  from '../TaskList';
+import React       from 'react';
+import Nav         from '../Nav/Nav';
+import TaskForm    from '../Task/TaskForm';
+import TaskList    from '../Task/TaskList';
+import Footer      from '../Footer/Footer';
 import AjaxAdapter from '../../helpers/AjaxAdapter';
 
 import './App.css';
 import './GA_gear.png';
 
-
 export default class App extends React.Component {
+
+  static doError(e) {
+    // placeholder for errors
+    throw e;
+  }
 
   constructor() {
     super();
@@ -19,25 +23,21 @@ export default class App extends React.Component {
     };
 
     /*  */
-    this.addTask = this.addTask.bind(this);
-    this.toggleComplete = this.toggleComplete.bind(this);
+    this.addTask                = this.addTask.bind(this);
+    this.updateStateWithNewTask = this.updateStateWithNewTask.bind(this);
+    this.toggleComplete         = this.toggleField.bind(this, 'completed');
+    this.toggleDelete           = this.toggleField.bind(this, 'deleted');
   }
 
 
   // this is right after the component is mounted on the screen
   componentDidMount() {
     AjaxAdapter.getTasks()
-    .then(allTasks =>
-      this.setState({ tasks: allTasks })
-    )
-    .catch(this.doError);
+      .then(allTasks => {
+        this.setState({ tasks: allTasks })
+      })
+      .catch(this.doError);
   }
-
-  doError(e) {
-    // placeholder for errors
-    throw e;
-  }
-
 
   updateStateWithNewTask(newTask) {
     // clone existing state
@@ -50,14 +50,14 @@ export default class App extends React.Component {
 
   addTask(task) {
     AjaxAdapter.createTask(task)
-    .then(this.updateStateWithNewTask)
-    .catch(this.doError);
+      .then(this.updateStateWithNewTask)
+      .catch(this.doError);
   }
 
-  toggleComplete(id) {
-    AjaxAdapter.toggleComplete(id)
-    .then(this.updateStateWithNewTask)
-    .catch(this.doError);
+  toggleField(field, id) {
+    AjaxAdapter.toggleField(field, id)
+      .then(this.updateStateWithNewTask)
+      .catch(this.doError);
   }
 
   hardDelete(id) {
@@ -85,7 +85,8 @@ export default class App extends React.Component {
             <TaskForm
               formData={this.state.taskForm}
               addTask={this.addTask}
-              trackForm={this.trackForm} />
+              trackForm={this.trackForm}
+            />
           </section>
 
           {/* to do lists */}

@@ -39,6 +39,25 @@ module.exports = {
   },
 
   /* PUT /tasks/:taskID */
+  toggleField(req, res, next) {
+    // tID is invented here
+    req.body.tID = Number.parseInt(req.params.taskID);
+
+    db.one(`
+      UPDATE task SET
+      $/field:name/ = NOT $/field:name/
+      WHERE id = $/tID/
+      returning *;
+      `, req.body)
+      .then((task) => {
+        console.log(`UPDATED ${req.body.field} SUCCESSFULLY`);
+        res.rows = task;
+        next();
+      })
+      .catch(error => next(error));
+  },
+
+  /* PUT /tasks/:taskID */
   updateTask(req, res, next) {
     // tID is invented here
     req.body.tID = Number.parseInt(req.params.taskID);

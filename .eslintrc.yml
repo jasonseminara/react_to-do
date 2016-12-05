@@ -6,6 +6,8 @@ plugins:
   - import
 rules:
   strict: 0
+  env:
+    browser: true
   global-require: 0
   key-spacing:
     - error

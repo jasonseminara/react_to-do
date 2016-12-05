@@ -9,6 +9,7 @@ const sendJSONresp = (req, res) => res.json(res.rows);
 
 tasks.route('/:taskID')
   .put(db.updateTask, sendJSONresp)
+  .patch(db.toggleField, sendJSONresp)
   .delete(db.deleteTask, (req,res) => res.send(req.params.taskID))
 
 // tasks

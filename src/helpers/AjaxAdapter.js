@@ -1,11 +1,13 @@
-function indexByKeyName(arr, keyName) {
-  return arr.reduce((obj, el) => {
-    obj[el[keyName]] = el;
-    return obj;
-  }, {});
+const indexByKeyName = (arr, keyName) =>
+  arr.reduce((obj, el) => ({ ...obj, [el[keyName]]: el }), {});
+
+const jsonHeader = {
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
 }
 
-export default class AjaxAdapter{
+export default class AjaxAdapter {
 
   static getTasks() {
     return fetch('/tasks')
@@ -15,21 +17,29 @@ export default class AjaxAdapter{
 
   static createTask(newTask) {
     return fetch('/tasks', {
-      method:  'POST',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-      body: JSON.stringify(newTask)
+      ...jsonHeader,
+      method: 'POST',
+      body:   JSON.stringify(newTask),
     })
-      .then(r => r.json());
+    .then(r => r.json());
   }
+
+
+  static toggleField(field, id) {
+    return fetch(`/tasks/${id}`, {
+      ...jsonHeader,
+      method: 'PATCH',
+      body:   JSON.stringify({field}),
+    })
+    .then(r => r.json());
+  }
+
 
   static deleteTask(id) {
     return fetch(`/tasks/${id}`, {
+      ...jsonHeader,
       method:  'DELETE',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    }).then(r => r.json());
+    })
+    .then(r => r.json());
   }
 }
