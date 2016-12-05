@@ -26,10 +26,12 @@ module.exports = {
   /* creates a new task, returns the newly created record */
   addTask(req, res, next) {
     console.log('===addTask===',req.body);
-    db.one(
-      'INSERT INTO task (name, description) VALUES ($/name/, $/desc/) returning *;',
-      req.body
+    db.one(`
+      INSERT INTO task (name, description)
+      VALUES ($/name/, $/desc/) returning *;
+      `, req.body
       )
+
       .then((task) => {
         console.log('ADDED TASK SUCCESSFUL');
         res.rows = task;
@@ -49,6 +51,7 @@ module.exports = {
       WHERE id = $/tID/
       returning *;
       `, req.body)
+
       .then((task) => {
         console.log(`UPDATED ${req.body.field} SUCCESSFULLY`);
         res.rows = task;
@@ -61,16 +64,19 @@ module.exports = {
   updateTask(req, res, next) {
     // tID is invented here
     req.body.tID = Number.parseInt(req.params.taskID);
+
+    // coerce into boolean
     req.body.completed = !!req.body.completed;
 
-    db.one(
-      `UPDATE task SET
+    db.one(`
+      UPDATE task SET
       name = $/name/,
       description = $/description/,
       completed = $/completed/,
       WHERE id = $/tID/
       returning *;
       `, req.body)
+
       .then((task) => {
         console.log('ADDED UPDATED SUCCESSFULLY');
         res.rows = task;

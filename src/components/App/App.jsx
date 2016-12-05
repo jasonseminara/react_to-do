@@ -20,6 +20,7 @@ export default class App extends React.Component {
 
     this.state = {
       tasks: {},
+      lastContact: Date.now(),
     };
 
     /*  */
@@ -27,14 +28,22 @@ export default class App extends React.Component {
     this.updateStateWithNewTask = this.updateStateWithNewTask.bind(this);
     this.toggleComplete         = this.toggleField.bind(this, 'completed');
     this.toggleDelete           = this.toggleField.bind(this, 'deleted');
+    this.getAllTasks            = this.getAllTasks.bind(this);
   }
 
 
   // this is right after the component is mounted on the screen
   componentDidMount() {
+    this.getAllTasks();
+  }
+
+  getAllTasks(){
     AjaxAdapter.getTasks()
       .then(allTasks => {
-        this.setState({ tasks: allTasks })
+        this.setState({
+          tasks: allTasks,
+          lastContact: Date.now(),
+        })
       })
       .catch(this.doError);
   }
@@ -45,7 +54,10 @@ export default class App extends React.Component {
 
     // update with new task
     newState[newTask.id] = newTask;
-    this.setState({ tasks: newState });
+    this.setState({
+      tasks: newState,
+      lastContact: Date.now(),
+    });
   }
 
   addTask(task) {
@@ -68,7 +80,10 @@ export default class App extends React.Component {
 
       // delete the item from the state
       delete newState[id];
-      this.setState({ tasks: newState });
+      this.setState({
+        tasks: newState,
+        lastContact: Date.now(),
+      });
     })
     .catch(this.doError);
   }
@@ -124,7 +139,10 @@ export default class App extends React.Component {
           </section>
         </main>
         <footer>
-          <Footer />
+          <Footer
+            reload={this.getAllTasks}
+            lastContact={this.state.lastContact}
+          />
         </footer>
 
       </container>
