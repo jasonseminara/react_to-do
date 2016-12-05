@@ -1,40 +1,74 @@
 import React from 'react';
 
-export default function TaskForm(props) {
-  const handleSubmit = (event) => {
+export default class TaskForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      taskForm: {
+        name: '',
+        desc: '',
+      },
+    };
+
+    this.trackFormName = this.updateStateOnChange.bind(this, 'name');
+    this.trackFormDesc = this.updateStateOnChange.bind(this, 'desc');
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
     // stop the event from leaving the form
     event.preventDefault();
 
-    // get a pointer to the form
-    const myForm = event.target;
-
     // fired the App's task function
-    props.addTask(
-      myForm.taskName.value,
-      myForm.taskDesc.value
-    );
+    this.props.addTask(this.state.taskForm);
 
-    // clear the form
-    event.target.reset();
-
+    this.setState({ taskForm: {
+      name: '',
+      desc: '',
+    },
+    });
     return false;
-  };
+  }
 
-  return (
-    <form className="form-inline" onSubmit={handleSubmit}>
+  updateStateOnChange(key, event) {
+    const newState = { ...this.state.taskForm };
 
-      <div className="form-group">
-        <label className="sr-only" htmlFor="taskName">Task Name</label>
-        <input type="text" className="form-control input-lg" name="taskName" placeholder="Task Name" />
-      </div>
+    // update with new task
+    newState[key] = event.target.value;
+    this.setState({ taskForm: newState });
+  }
 
-      <div className="form-group">
-        <label className="sr-only" htmlFor="taskDesc">Task Description</label>
-        <input type="text" className="form-control input-lg" name="taskDesc" placeholder="Task Description" />
-      </div>
-      <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
-    </form>
-  );
+
+  render() {
+    return (
+      <form className="form-inline" onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label className="sr-only" htmlFor="taskName">Task Name</label>
+          <input
+            type="text"
+            className="form-control input-lg"
+            value={this.state.taskForm.name}
+            onChange={this.trackFormName}
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="sr-only" htmlFor="taskDesc">Task Description</label>
+          <input
+            type="text"
+            className="form-control input-lg"
+            value={this.state.taskForm.desc}
+            onChange={this.trackFormDesc}
+
+          />
+        </div>
+        <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
+      </form>
+    );
+  }
 }
 
 /* PROP TYPES */

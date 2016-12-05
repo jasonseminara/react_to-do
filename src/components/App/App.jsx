@@ -23,34 +23,54 @@ export default class App extends React.Component {
     this.toggleComplete = this.toggleComplete.bind(this);
   }
 
+
   // this is right after the component is mounted on the screen
   componentDidMount() {
     AjaxAdapter.getTasks()
     .then(allTasks =>
       this.setState({ tasks: allTasks })
     )
-    .catch((error) => {
-        throw error;
-    });
+    .catch(this.doError);
   }
 
-  addTask(name, desc) {
-    AjaxAdapter.createTask({ name, desc })
-    .then((newTask) => {
-      // clone existing state
-      const newState = { ...this.state.tasks };
-      newState[newTask.id] = newTask;
-      this.setState({ tasks: newState });
-    })
-    .catch((error) => {
-      throw error;
-    });
+  doError(e) {
+    // placeholder for errors
+    throw e;
+  }
+
+
+  updateStateWithNewTask(newTask) {
+    // clone existing state
+    const newState = { ...this.state.tasks };
+
+    // update with new task
+    newState[newTask.id] = newTask;
+    this.setState({ tasks: newState });
+  }
+
+  addTask(task) {
+    AjaxAdapter.createTask(task)
+    .then(this.updateStateWithNewTask)
+    .catch(this.doError);
   }
 
   toggleComplete(id) {
-    const newState = { ...this.state.tasks };
-    newState[id].completed = !newState[id].completed;
-    this.setState({ tasks: newState });
+    AjaxAdapter.toggleComplete(id)
+    .then(this.updateStateWithNewTask)
+    .catch(this.doError);
+  }
+
+  hardDelete(id) {
+    AjaxAdapter.toggleComplete(id)
+    .then(() => {
+      // clone existing state
+      const newState = { ...this.state.tasks };
+
+      // delete the item from the state
+      delete newState[id];
+      this.setState({ tasks: newState });
+    })
+    .catch(this.doError);
   }
 
   render() {
@@ -62,8 +82,12 @@ export default class App extends React.Component {
         <main className="container">
           <section className="jumbotron">
             <h1>Task Manager</h1>
-            <TaskForm addTask={this.addTask} />
+            <TaskForm
+              formData={this.state.taskForm}
+              addTask={this.addTask}
+              trackForm={this.trackForm} />
           </section>
+
           {/* to do lists */}
           <section className="row">
 

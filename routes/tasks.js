@@ -9,7 +9,7 @@ const sendJSONresp = (req, res) => res.json(res.rows);
 
 tasks.route('/:taskID')
   .put(db.updateTask, sendJSONresp)
-  .delete(db.deleteTask, (req,res)=>res.send(req.params.taskID))
+  .delete(db.deleteTask, (req,res) => res.send(req.params.taskID))
 
 // tasks
 // this is the most general route, so it goes last
