@@ -2,6 +2,8 @@ import React       from 'react';
 import Nav         from '../Nav/Nav';
 import TaskForm    from '../Task/TaskForm';
 import TaskList    from '../Task/TaskList';
+import Task        from '../Task/Task';
+import IconButton  from '../IconButton/IconButton';
 import Footer      from '../Footer/Footer';
 import AjaxAdapter from '../../helpers/AjaxAdapter';
 
@@ -19,16 +21,16 @@ export default class App extends React.Component {
     super();
 
     this.state = {
-      tasks: {},
+      tasks:       {},
       lastContact: Date.now(),
     };
 
-    /*  */
-    this.addTask                = this.addTask.bind(this);
+    /* bind all our functions */
+    this.addTask = this.addTask.bind(this);
     this.updateStateWithNewTask = this.updateStateWithNewTask.bind(this);
-    this.toggleComplete         = this.toggleField.bind(this, 'completed');
-    this.toggleDelete           = this.toggleField.bind(this, 'deleted');
-    this.getAllTasks            = this.getAllTasks.bind(this);
+    this.toggleComplete = this.toggleField.bind(this, 'completed');
+    this.toggleDelete = this.toggleField.bind(this, 'deleted');
+    this.getAllTasks = this.getAllTasks.bind(this);
   }
 
 
@@ -37,13 +39,13 @@ export default class App extends React.Component {
     this.getAllTasks();
   }
 
-  getAllTasks(){
+  getAllTasks() {
     AjaxAdapter.getTasks()
-      .then(allTasks => {
+      .then((allTasks) => {
         this.setState({
-          tasks: allTasks,
+          tasks:       allTasks,
           lastContact: Date.now(),
-        })
+        });
       })
       .catch(this.doError);
   }
@@ -55,7 +57,7 @@ export default class App extends React.Component {
     // update with new task
     newState[newTask.id] = newTask;
     this.setState({
-      tasks: newState,
+      tasks:       newState,
       lastContact: Date.now(),
     });
   }
@@ -81,7 +83,7 @@ export default class App extends React.Component {
       // delete the item from the state
       delete newState[id];
       this.setState({
-        tasks: newState,
+        tasks:       newState,
         lastContact: Date.now(),
       });
     })
@@ -113,8 +115,11 @@ export default class App extends React.Component {
               <TaskList
                 filter={task => !task.completed && !task.deleted}
                 collection={this.state.tasks}
-                toggleComplete={this.toggleComplete}
-              />
+              >
+
+                <Task onClick={this.toggleComplete} />
+
+              </TaskList>
             </article>
 
             {/* COMPLETED TASKS  */}
@@ -123,8 +128,13 @@ export default class App extends React.Component {
               <TaskList
                 filter={task => !task.deleted && task.completed}
                 collection={this.state.tasks}
-                toggleComplete={this.toggleComplete}
-              />
+              >
+
+                <Task onClick={this.toggleComplete}>
+                  <IconButton onClick={this.toggleDelete} icon="trash" />
+                </Task>
+
+              </TaskList>
             </article>
 
             {/* DELETED TASKS */}
@@ -133,8 +143,13 @@ export default class App extends React.Component {
               <TaskList
                 filter={task => task.deleted}
                 collection={this.state.tasks}
-                toggleComplete={this.toggleComplete}
-              />
+              >
+
+                <Task onClick={this.toggleDelete}>
+                  <IconButton onClick={this.toggleDelete} icon="remove" />
+                </Task>
+
+              </TaskList>
             </article>
           </section>
         </main>
@@ -148,5 +163,4 @@ export default class App extends React.Component {
       </container>
     );
   }
-
 }

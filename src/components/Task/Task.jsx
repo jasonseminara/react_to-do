@@ -5,19 +5,20 @@ const Task = props => (
     type="button"
     className="list-group-item"
     title="Click to Complete"
-    onClick={props.click}
+    onClick={event => props.onClick(props.task.id)}
   >
-    <strong>{props.title}</strong> {props.desc}
+    <strong>{props.task.name}</strong> {props.task.description}
+
+    {/* Render any children that were passed to me */}
+    {props.children}
   </button>
 );
-
 
 /* PROP TYPES */
 Task.PropTypes = {
   title: React.PropTypes.string.isRequired,
   desc:  React.PropTypes.string.isRequired,
-  click: React.PropTypes.func.isRequired,
+  onClick: React.PropTypes.func.isRequired,
 };
-
 
 export default Task;

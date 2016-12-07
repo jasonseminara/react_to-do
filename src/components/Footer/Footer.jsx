@@ -1,9 +1,8 @@
 import React from 'react';
-import './Footer.css';
 import moment from 'moment';
+import './Footer.css';
 
 const Footer = (props) => {
-
   function handleClick(event) {
     event.preventDefault();
     props.reload();
@@ -22,8 +21,13 @@ const Footer = (props) => {
 
       </div>
     </div>
-  )
+  );
 };
 
+/* PROP TYPES */
+Footer.PropTypes = {
+  lastContact: React.PropTypes.string.isRequired,
+  reload:      React.PropTypes.func.isRequired,
+};
 
 export default Footer;
