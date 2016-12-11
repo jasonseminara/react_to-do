@@ -30,13 +30,13 @@
     "express": "^4.14.0",
     "morgan": "^1.7.0",
     "path": "^0.12.7",
-    "pg-promise": "^5.3.5"
+    "pg-promise": "^5.5.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-core": "^6.20.0",
+    "babel-loader": "^6.2.9",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-plugin-transform-strict-mode": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
@@ -44,20 +44,20 @@
     "bootstrap": "^3.3.7",
     "css-loader": "^0.23.1",
     "dotenv": "^2.0.0",
-    "eslint": "^3.9.1",
+    "eslint": "^3.12.0",
     "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^2.1.0",
+    "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.6.0",
+    "eslint-plugin-react": "^6.8.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
-    "html-webpack-template": "^5.4.1",
+    "html-webpack-template": "^5.5.0",
     "moment": "^2.17.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3"
+    "webpack": "^1.14.0"
   }
 }
