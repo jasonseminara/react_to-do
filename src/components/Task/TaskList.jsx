@@ -12,7 +12,9 @@ function cloneItem(taskID, props, extraProps){
 }
 
 const TaskList = props =>
-  /* Loop over the collection, fiter out items we dont want and render using the functions above */
+  /* Loop over the collection,
+     fiter out items we dont want
+     then render using the functions above */
   <div className="list-group">
     {Object.keys(props.collection)
       .filter(taskID =>
