@@ -23,14 +23,14 @@ export default class TaskForm extends React.Component {
     event.preventDefault();
 
     // fired the App's task function
-    this.props.addTask(this.state.taskForm);
+    this.props.saveTask(this.state.taskForm);
 
-    this.setState({ taskForm: {
-      name: '',
-      desc: '',
-    },
+    this.setState({
+      taskForm: {
+        name: '',
+        desc: '',
+      },
     });
-    return false;
   }
 
   updateStateOnChange(key, event) {
@@ -49,7 +49,7 @@ export default class TaskForm extends React.Component {
           <label className="sr-only" htmlFor="taskName">Task Name</label>
           <input
             type="text"
-            className="form-control input-lg"
+            className={`form-control input-${this.props.size}`}
             value={this.state.taskForm.name}
             onChange={this.trackFormName}
           />
@@ -59,19 +59,29 @@ export default class TaskForm extends React.Component {
           <label className="sr-only" htmlFor="taskDesc">Task Description</label>
           <input
             type="text"
-            className="form-control input-lg"
+            className={`form-control input-${this.props.size}`}
             value={this.state.taskForm.desc}
             onChange={this.trackFormDesc}
 
           />
         </div>
-        <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
+        {this.props.children}
       </form>
     );
   }
 }
 
 /* PROP TYPES */
+TaskForm.defaultProps = {
+  size: 'lg',
+};
+
 TaskForm.propTypes = {
-  addTask: React.PropTypes.func.isRequired,
+  saveTask: React.PropTypes.func.isRequired,
+  size:     React.PropTypes.string,
+  /* we might have a child, or an array of children*/
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node,
+  ]).isRequired,
 };

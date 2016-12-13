@@ -1,6 +1,6 @@
 import React       from 'react';
 import Nav         from '../Nav/Nav';
-import TaskForm    from '../Task/TaskForm';
+import TaskForm    from '../TaskForm/TaskForm';
 import TaskList    from '../Task/TaskList';
 import Task        from '../Task/Task';
 import IconButton  from '../IconButton/IconButton';
@@ -32,6 +32,7 @@ export default class App extends React.Component {
     this.toggleComplete = this.toggleField.bind(this, 'completed');
     this.toggleDelete = this.toggleField.bind(this, 'deleted');
     this.getAllTasks = this.getAllTasks.bind(this);
+    this.login = this.login.bind(this);
   }
 
 
@@ -57,10 +58,17 @@ export default class App extends React.Component {
 
     // update with new task
     newState[newTask.id] = newTask;
+
     this.setState({
       tasks:       newState,
       lastContact: Date.now(),
     });
+  }
+
+  login(user) {
+    const { name: email, desc: password } = user;
+    this.ajaxAdapter.login({ email, password })
+    .catch(this.doError);
   }
 
   addTask(task) {
@@ -71,7 +79,10 @@ export default class App extends React.Component {
 
   toggleField(field, id) {
     this.ajaxAdapter.toggleField(field, id)
-      .then(this.updateStateWithNewTask)
+      .then(() => this.ajaxAdapter.getTask(id)
+        .then(this.updateStateWithNewTask)
+        .catch(this.doError)
+      )
       .catch(this.doError);
   }
 
@@ -98,13 +109,14 @@ export default class App extends React.Component {
           <Nav />
         </header>
         <main className="container">
+          <TaskForm saveTask={this.login} size="sm">
+            <button type="submit" className="btn btn-sm">Login</button>
+          </TaskForm>
           <section className="jumbotron">
             <h1>Task Manager</h1>
-            <TaskForm
-              formData={this.state.taskForm}
-              addTask={this.addTask}
-              trackForm={this.trackForm}
-            />
+            <TaskForm saveTask={this.addTask}>
+              <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
+            </TaskForm>
           </section>
 
           {/* to do lists */}

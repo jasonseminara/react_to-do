@@ -1,4 +1,6 @@
 /* global fetch:false */
+/* global Headers:false */
+import Auth from './Auth';
 
 export default class AjaxAdapter {
 
@@ -7,10 +9,21 @@ export default class AjaxAdapter {
 
     // we'll be using this header a LOT below
     this.jsonHeader = {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+      'Content-type': 'application/vnd.api+json',
+      Accept:         'application/vnd.api+json',
     };
+
+    this.headerWithToken = () => new Headers({
+      ...this.jsonHeader,
+      Authorization: `Bearer ${Auth.getToken()}`,
+    });
+
+    /* restructure the received data into the shape we expect */
+    this.reShapeResponse = r =>
+      r.data.map(task => ({
+        ...task.attributes,
+        id: task.id,
+      }));
 
     // custom function to convert an array into a obj literal
     // indexed by keys of our choosing
@@ -18,34 +31,64 @@ export default class AjaxAdapter {
       arr.reduce((obj, el) => ({ ...obj, [el[keyName]]: el }), {});
   }
 
+  /* LOGIN does not require a token; we receive one */
+  login(user) {
+    return fetch(`${this.API_URL}/auth_user`, {
+      headers: this.jsonHeader,
+      method:  'POST',
+      body:    JSON.stringify(user),
+    })
+    .then(r => r.json())
+    .then(r => Auth.authenticateUser(r.auth_token));
+  }
+
   getTasks() {
-    return fetch(`${this.API_URL}/tasks`)
-      .then(r => r.json())
-      .then(data => this.indexByKeyName(data, 'id'));
+    return fetch(`${this.API_URL}/tasks`, {
+      method:  'GET',
+      headers: this.headerWithToken(),
+    })
+    .then(r => r.json())
+    /* restructure the received data into the shape we expect */
+    .then(r => this.reShapeResponse(r))
+    .then(data => this.indexByKeyName(data, 'id'));
+  }
+
+  getTask(id) {
+    return fetch(`${this.API_URL}/tasks/${id}`, {
+      method:  'GET',
+      headers: this.headerWithToken(),
+    })
+    .then(r => r.json())
+    .then(r =>
+      /* restructure the received data into the shape we expect */
+      ({
+        ...r.data.attributes,
+        id: r.data.id,
+      })
+    );
   }
 
   createTask(newTask) {
     return fetch(`${this.API_URL}/tasks`, {
-      ...this.jsonHeader,
-      method: 'POST',
-      body:   JSON.stringify(newTask),
+      method:  'POST',
+      headers: this.headerWithToken(),
+      body:    JSON.stringify(newTask),
     })
     .then(r => r.json());
   }
 
   toggleField(field, id) {
     return fetch(`${this.API_URL}/tasks/${id}/toggle`, {
-      ...this.jsonHeader,
-      method: 'PATCH',
-      body:   JSON.stringify({ field }),
-    })
-    .then(r => r.json());
+      method:  'PATCH',
+      headers: this.headerWithToken(),
+      body:    JSON.stringify({ field }),
+    });
   }
 
   deleteTask(id) {
     return fetch(`${this.API_URL}/tasks/${id}`, {
-      ...this.jsonHeader,
-      method: 'DELETE',
+      method:  'DELETE',
+      headers: this.headerWithToken(),
     })
     .then(r => r.json());
   }
