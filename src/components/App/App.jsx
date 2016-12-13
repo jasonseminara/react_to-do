@@ -11,13 +11,14 @@ import './App.css';
 import './GA_gear.png';
 
 export default class App extends React.Component {
-  static doError(e) {
-    // placeholder for errors
-    throw e;
-  }
 
   constructor() {
     super();
+
+    this.doError = () => {
+      // TODO: tie this to the state
+      AjaxAdapter.clearToken();
+    };
 
     this.state = {
       tasks:       {},

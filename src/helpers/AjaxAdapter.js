@@ -3,6 +3,9 @@
 import Auth from './Auth';
 
 export default class AjaxAdapter {
+  static clearToken() {
+    Auth.deauthenticateUser();
+  }
 
   constructor(api) {
     this.API_URL = api;
@@ -46,7 +49,8 @@ export default class AjaxAdapter {
     return fetch(url, {
       headers: this.headerWithToken(),
       method:  'GET',
-    });
+    })
+    .then(r => !r.status.ok && Promise.reject(r));
   }
 
   /* LOGIN does not require a token; we receive one */
