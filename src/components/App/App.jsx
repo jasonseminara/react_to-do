@@ -11,7 +11,6 @@ import './App.css';
 import './GA_gear.png';
 
 export default class App extends React.Component {
-
   static doError(e) {
     // placeholder for errors
     throw e;
@@ -24,6 +23,8 @@ export default class App extends React.Component {
       tasks:       {},
       lastContact: Date.now(),
     };
+
+    this.ajaxAdapter = new AjaxAdapter(process.env.API_URL);
 
     /* bind all our functions */
     this.addTask = this.addTask.bind(this);
@@ -40,7 +41,7 @@ export default class App extends React.Component {
   }
 
   getAllTasks() {
-    AjaxAdapter.getTasks()
+    this.ajaxAdapter.getTasks()
       .then((allTasks) => {
         this.setState({
           tasks:       allTasks,
@@ -63,19 +64,19 @@ export default class App extends React.Component {
   }
 
   addTask(task) {
-    AjaxAdapter.createTask(task)
+    this.ajaxAdapter.createTask(task)
       .then(this.updateStateWithNewTask)
       .catch(this.doError);
   }
 
   toggleField(field, id) {
-    AjaxAdapter.toggleField(field, id)
+    this.ajaxAdapter.toggleField(field, id)
       .then(this.updateStateWithNewTask)
       .catch(this.doError);
   }
 
   hardDelete(id) {
-    AjaxAdapter.toggleComplete(id)
+    this.ajaxAdapter.toggleComplete(id)
     .then(() => {
       // clone existing state
       const newState = { ...this.state.tasks };

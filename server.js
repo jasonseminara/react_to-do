@@ -11,7 +11,7 @@ const path        = require('path');
 const isDev = !('NODE_ENV' in process.env) && require('dotenv').config() && true;
 
 const app    = express();
-const PORT   = process.argv[2] || process.env.port || 3001;
+const PORT   = process.argv[2] || process.env.port || 3000;
 
 // set up some logging
 app.use(logger(isDev ? 'dev' : 'common'));

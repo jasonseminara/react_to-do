@@ -7,6 +7,9 @@ const htmlTemplate      = require('html-webpack-template');
 const BUILD_DIR         = path.resolve(__dirname, 'dist');
 const APP_DIR           = path.resolve(__dirname, 'src');
 
+// let's bring in local environmental variables
+if (!('NODE_ENV' in process.env)) require('dotenv').config();
+
 const config = {
   entry:  `${APP_DIR}/main.js`,
   output: {
@@ -23,10 +26,11 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
-  plugins: [~
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        API_URL:  JSON.stringify(process.env.API_URL),
       },
     }),
     new HtmlWebpackPlugin({
