@@ -58,7 +58,6 @@ export default class App extends React.Component {
 
     // update with new task
     newState[newTask.id] = newTask;
-
     this.setState({
       tasks:       newState,
       lastContact: Date.now(),
@@ -66,8 +65,12 @@ export default class App extends React.Component {
   }
 
   login(user) {
-    const { name: email, desc: password } = user;
-    this.ajaxAdapter.login({ email, password })
+    /* since we're reusing the taskform, we'll need to rename the fields */
+    /* {name,desc} --> {email,password} */
+    this.ajaxAdapter.login({
+      email:    user.name,
+      password: user.desc,
+    })
     .catch(this.doError);
   }
 
@@ -79,14 +82,12 @@ export default class App extends React.Component {
 
   toggleField(field, id) {
     this.ajaxAdapter.toggleField(field, id)
-      .then(() => this.ajaxAdapter.getTask(id)
-        .then(this.updateStateWithNewTask)
-        .catch(this.doError)
-      )
+      .then(this.updateStateWithNewTask)
       .catch(this.doError);
   }
 
   hardDelete(id) {
+    //
     this.ajaxAdapter.toggleComplete(id)
     .then(() => {
       // clone existing state

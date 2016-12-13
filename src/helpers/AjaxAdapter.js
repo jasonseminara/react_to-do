@@ -19,16 +19,34 @@ export default class AjaxAdapter {
     });
 
     /* restructure the received data into the shape we expect */
-    this.reShapeResponse = r =>
-      r.data.map(task => ({
-        ...task.attributes,
-        id: task.id,
-      }));
+    this.formatResponse = function (r) {
+      return r.data.map ?
+        /* if our data is a collection */
+        r.data.map(task => ({
+          ...task.attributes,
+          id: +task.id,
+        }))
+      :
+        /* If our data is single */
+        {
+          ...r.data.attributes,
+          id: +r.data.id,
+        };
+    };
 
     // custom function to convert an array into a obj literal
     // indexed by keys of our choosing
     this.indexByKeyName = (arr, keyName) =>
       arr.reduce((obj, el) => ({ ...obj, [el[keyName]]: el }), {});
+  }
+
+
+  /* basic GET with a token */
+  getAuthURL(url) {
+    return fetch(url, {
+      headers: this.headerWithToken(),
+      method:  'GET',
+    });
   }
 
   /* LOGIN does not require a token; we receive one */
@@ -43,38 +61,39 @@ export default class AjaxAdapter {
   }
 
   getTasks() {
-    return fetch(`${this.API_URL}/tasks`, {
-      method:  'GET',
-      headers: this.headerWithToken(),
-    })
+    return this.getAuthURL(`${this.API_URL}/tasks`)
     .then(r => r.json())
     /* restructure the received data into the shape we expect */
-    .then(r => this.reShapeResponse(r))
+    .then(this.formatResponse)
     .then(data => this.indexByKeyName(data, 'id'));
   }
 
   getTask(id) {
-    return fetch(`${this.API_URL}/tasks/${id}`, {
-      method:  'GET',
-      headers: this.headerWithToken(),
-    })
+    return this.getAuthURL(`${this.API_URL}/tasks/${id}`)
     .then(r => r.json())
-    .then(r =>
-      /* restructure the received data into the shape we expect */
-      ({
-        ...r.data.attributes,
-        id: r.data.id,
-      })
-    );
+    /* restructure the received data into the shape we expect */
+    .then(this.formatResponse)
+    .then(data => this.indexByKeyName(data, 'id'));
   }
 
   createTask(newTask) {
+    // The server is expecting {name, description}
+    const taskFormatted = {
+      name:        newTask.name,
+      description: newTask.desc,
+    };
+
     return fetch(`${this.API_URL}/tasks`, {
       method:  'POST',
       headers: this.headerWithToken(),
-      body:    JSON.stringify(newTask),
+      body:    JSON.stringify(taskFormatted),
     })
-    .then(r => r.json());
+
+    /* make another fetch to grab the newly created task */
+    /* We'll be returning the fetch, so the other thens will work */
+    .then(r => this.getAuthURL(r.headers.get('Location')))
+    .then(r => r.json())
+    .then(this.formatResponse);
   }
 
   toggleField(field, id) {
@@ -82,6 +101,16 @@ export default class AjaxAdapter {
       method:  'PATCH',
       headers: this.headerWithToken(),
       body:    JSON.stringify({ field }),
+    })
+    .then(r => {
+      debugger
+      this.getAuthURL(r.headers.get('Location'))
+    })
+    .then(r => r.json())
+    .then(this.formatResponse)
+    .then(data => {
+      debugger
+      this.indexByKeyName(data, 'id')
     });
   }
 
@@ -90,6 +119,9 @@ export default class AjaxAdapter {
       method:  'DELETE',
       headers: this.headerWithToken(),
     })
-    .then(r => r.json());
+    .then(r => this.getAuthURL(r.headers.get('Location')))
+    .then(r => r.json())
+    .then(this.formatResponse)
+    .then(data => this.indexByKeyName(data, 'id'));
   }
 }
