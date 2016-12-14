@@ -36,6 +36,9 @@ The application will allow the user to create, modify and delete a to-do item. T
 3. Add a new remote to receive updates: `git remote add upstream git@github.com:ga-wdi-exercises/react_to-do.git`
 
 
+##Sources
+1. https://github.com/github/fetch/issues/201
+
 ## Licensing
  1. All content is licensed under a CC­BY­NC­SA 4.0 license.
  2. All software code is licensed under GNU GPLv3. For commercial use or alternative licensing, please contact legal@ga.co.

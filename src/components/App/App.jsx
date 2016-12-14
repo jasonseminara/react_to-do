@@ -6,6 +6,7 @@ import Task        from '../Task/Task';
 import IconButton  from '../IconButton/IconButton';
 import Footer      from '../Footer/Footer';
 import AjaxAdapter from '../../helpers/AjaxAdapter';
+import Auth        from '../../helpers/Auth';
 
 import './App.css';
 import './GA_gear.png';
@@ -15,14 +16,16 @@ export default class App extends React.Component {
   constructor() {
     super();
 
-    this.doError = () => {
+    this.doError = (e) => {
       // TODO: tie this to the state
-      AjaxAdapter.clearToken();
+      //console.log(e);
+      // AjaxAdapter.clearToken();
     };
 
     this.state = {
       tasks:       {},
       lastContact: Date.now(),
+      isLoggedIn:  Auth.isUserAuthenticated(),
     };
 
     this.ajaxAdapter = new AjaxAdapter(process.env.API_URL);

@@ -22,8 +22,8 @@ export default class AjaxAdapter {
     });
 
     /* restructure the received data into the shape we expect */
-    this.formatResponse = function (r) {
-      return r.data.map ?
+    this.formatResponse = r => (
+      r.data.map ?
         /* if our data is a collection */
         r.data.map(task => ({
           ...task.attributes,
@@ -34,15 +34,15 @@ export default class AjaxAdapter {
         {
           ...r.data.attributes,
           id: +r.data.id,
-        };
-    };
+        }
+    );
 
     // custom function to convert an array into a obj literal
     // indexed by keys of our choosing
     this.indexByKeyName = (arr, keyName) =>
-      arr.reduce((obj, el) => ({ ...obj, [el[keyName]]: el }), {});
+      arr.reduce((obj, el) =>
+        ({ ...obj, [el[keyName]]: el }), {});
   }
-
 
   /* basic GET with a token */
   getAuthURL(url) {
@@ -50,7 +50,7 @@ export default class AjaxAdapter {
       headers: this.headerWithToken(),
       method:  'GET',
     })
-    .then(r => !r.status.ok && Promise.reject(r));
+    .then(response => (!response.ok ? Promise.reject(response) : response));
   }
 
   /* LOGIN does not require a token; we receive one */
@@ -92,6 +92,7 @@ export default class AjaxAdapter {
       headers: this.headerWithToken(),
       body:    JSON.stringify(taskFormatted),
     })
+    .then(response => (!response.ok ? Promise.reject(response) : response))
 
     /* make another fetch to grab the newly created task */
     /* We'll be returning the fetch, so the other thens will work */
@@ -106,16 +107,9 @@ export default class AjaxAdapter {
       headers: this.headerWithToken(),
       body:    JSON.stringify({ field }),
     })
-    .then(r => {
-      debugger
-      this.getAuthURL(r.headers.get('Location'))
-    })
+    .then(r => this.getAuthURL(r.headers.get('Location')))
     .then(r => r.json())
-    .then(this.formatResponse)
-    .then(data => {
-      debugger
-      this.indexByKeyName(data, 'id')
-    });
+    .then(this.formatResponse);
   }
 
   deleteTask(id) {
