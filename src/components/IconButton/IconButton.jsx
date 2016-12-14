@@ -1,13 +1,13 @@
 import React from 'react';
 
 export default function IconButton(props) {
-
   const handleClick = (event) => {
     /* kill the link action here */
     event.stopPropagation();
 
     /* trigger the provided function */
     props.onClick(props.task.id);
+    return false;
   };
 
   return (
@@ -18,6 +18,6 @@ export default function IconButton(props) {
 }
 
 IconButton.propTypes = {
-  onClick:    React.PropTypes.func.isRequired,
-  icon:       React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+  icon:    React.PropTypes.string.isRequired,
 };

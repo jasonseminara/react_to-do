@@ -117,9 +117,6 @@ export default class AjaxAdapter {
       method:  'DELETE',
       headers: this.headerWithToken(),
     })
-    .then(r => this.getAuthURL(r.headers.get('Location')))
-    .then(r => r.json())
-    .then(this.formatResponse)
-    .then(data => this.indexByKeyName(data, 'id'));
+    .then(response => (!response.ok ? Promise.reject(response) : response));
   }
 }

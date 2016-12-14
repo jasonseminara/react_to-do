@@ -37,6 +37,7 @@ export default class App extends React.Component {
     this.toggleDelete = this.toggleField.bind(this, 'deleted');
     this.getAllTasks = this.getAllTasks.bind(this);
     this.login = this.login.bind(this);
+    this.hardDelete = this.hardDelete.bind(this);
   }
 
 
@@ -91,14 +92,17 @@ export default class App extends React.Component {
   }
 
   hardDelete(id) {
-    //
-    this.ajaxAdapter.toggleComplete(id)
+    this.ajaxAdapter.deleteTask(id)
     .then(() => {
       // clone existing state
-      const newState = { ...this.state.tasks };
+      const newState = {
+        ...this.state.tasks,
+      };
 
       // delete the item from the state
       delete newState[id];
+
+      // update the state
       this.setState({
         tasks:       newState,
         lastContact: Date.now(),
@@ -164,7 +168,7 @@ export default class App extends React.Component {
               >
 
                 <Task onClick={this.toggleDelete}>
-                  <IconButton onClick={this.toggleDelete} icon="remove" />
+                  <IconButton onClick={this.hardDelete} icon="remove" />
                 </Task>
 
               </TaskList>
