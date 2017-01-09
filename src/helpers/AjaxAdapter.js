@@ -1,10 +1,24 @@
 /* global fetch:false */
 /* global Headers:false */
 import Auth from './Auth';
+import ArrayExtensions from './ArrayExtensions';
 
 export default class AjaxAdapter {
-  static clearToken() {
+  clearToken() {
     Auth.deauthenticateUser();
+  }
+
+  formatResponse(r) {
+    const promoteIDfield = task => ({
+      ...task.attributes,
+      id: +task.id,
+    });
+
+
+    /* if our data is a collection map over each,
+      otherwise run the formatter on the one piece of data */
+    const data = r.data.map ? r.data.map(promoteIDfield) : promoteIDfield(r.data);
+    return data;
   }
 
   constructor(api) {
@@ -20,28 +34,6 @@ export default class AjaxAdapter {
       ...this.jsonHeader,
       Authorization: `Bearer ${Auth.getToken()}`,
     });
-
-    /* restructure the received data into the shape we expect */
-    this.formatResponse = r => (
-      r.data.map ?
-        /* if our data is a collection */
-        r.data.map(task => ({
-          ...task.attributes,
-          id: +task.id,
-        }))
-      :
-        /* If our data is single */
-        {
-          ...r.data.attributes,
-          id: +r.data.id,
-        }
-    );
-
-    // custom function to convert an array into a obj literal
-    // indexed by keys of our choosing
-    this.indexByKeyName = (arr, keyName) =>
-      arr.reduce((obj, el) =>
-        ({ ...obj, [el[keyName]]: el }), {});
   }
 
   /* basic GET with a token */
@@ -69,7 +61,7 @@ export default class AjaxAdapter {
     .then(r => r.json())
     /* restructure the received data into the shape we expect */
     .then(this.formatResponse)
-    .then(data => this.indexByKeyName(data, 'id'));
+    .then(data => ArrayExtensions.indexByKeyName(data, 'id'));
   }
 
   getTask(id) {
@@ -77,7 +69,7 @@ export default class AjaxAdapter {
     .then(r => r.json())
     /* restructure the received data into the shape we expect */
     .then(this.formatResponse)
-    .then(data => this.indexByKeyName(data, 'id'));
+    .then(data => ArrayExtensions.indexByKeyName(data, 'id'));
   }
 
   createTask(newTask) {

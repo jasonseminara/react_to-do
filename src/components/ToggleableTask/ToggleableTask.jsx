@@ -41,9 +41,8 @@ export default function ToggleableTask(props) {
 
 ToggleableTask.propTypes = {
   id:            React.PropTypes.number.isRequired,
-  onSubmit:      React.PropTypes.func.isRequired,
-  closeTaskForm: React.PropTypes.func.isRequired,
+  closeTaskForm: React.PropTypes.func,
   task:          React.PropTypes.shape({
-    formOpen: React.PropTypes.bool.isRequired,
+    formOpen: React.PropTypes.bool,
   }).isRequired,
 };

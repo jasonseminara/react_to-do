@@ -47,10 +47,10 @@ const config = {
 
   module: {
     loaders: [
+      { test: /\.jsx?$/, loader: 'babel-loader?presets[]=es2015', exclude: /node_modules/ },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
       { test: /\.(png|gif|jpg)$/, loader: 'file-loader?name=/images/[name].[ext]' },
       { test: /\.ico$/, loader: 'file-loader?name=/[name].[ext]' },
-      { test: /\.jsx?$/, loader: 'babel-loader' },
       {
         test:   /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=100&mimetype=application/font-woff&name=/fonts/[name].[ext]',

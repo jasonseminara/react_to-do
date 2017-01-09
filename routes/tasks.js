@@ -1,22 +1,23 @@
+const TaskDB = require('../model/task');
+
 const tasks = require('express').Router();
-const db = require('../model/task');
+const TaskSerializer = require('../serializers/task');
 
 /* convenience method for sending */
-const sendJSONresp = (req, res) => res.json(res.rows);
+const sendJSONresp = (req, res) => res.json(TaskSerializer.serialize(res.rows));
 
-// tasks/:id
-// this is more specific than the /tasks, so it goes above
-
+// tasks/:taskID
+// this is more specific than the /tasks, so it goes first
 tasks.route('/:taskID')
-  .put(db.updateTask, sendJSONresp)
-  .patch(db.toggleField, sendJSONresp)
-  .delete(db.deleteTask, (req,res) => res.send(req.params.taskID))
+  .put(TaskDB.updateTask, sendJSONresp)
+  .patch(TaskDB.toggleField, sendJSONresp)
+  .delete(TaskDB.deleteTask, (req, res) => res.send(req.params.taskID));
 
 // tasks
 // this is the most general route, so it goes last
 tasks.route('/')
-  .get(db.getTasks, sendJSONresp)
-  .post(db.addTask, sendJSONresp);
+  .get(TaskDB.getTasks, sendJSONresp)
+  .post(TaskDB.addTask, sendJSONresp);
 
 // export this so it is available to server.js
 module.exports = tasks;
