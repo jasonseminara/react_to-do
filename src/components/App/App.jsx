@@ -1,12 +1,13 @@
-import React       from 'react';
-import Nav         from '../Nav/Nav';
-import TaskForm    from '../TaskForm/TaskForm';
-import TaskList    from '../Task/TaskList';
-import Task        from '../Task/Task';
-import IconButton  from '../IconButton/IconButton';
-import Footer      from '../Footer/Footer';
-import AjaxAdapter from '../../helpers/AjaxAdapter';
-import Auth        from '../../helpers/Auth';
+import React          from 'react';
+import Nav            from '../Nav/Nav';
+import TaskForm       from '../TaskForm/TaskForm';
+import TaskList       from '../Task/TaskList';
+import ToggleableTask from '../ToggleableTask/ToggleableTask';
+import Task           from '../Task/Task';
+import IconButton     from '../IconButton/IconButton';
+import Footer         from '../Footer/Footer';
+import AjaxAdapter    from '../../helpers/AjaxAdapter';
+import Auth           from '../../helpers/Auth';
 
 import './App.css';
 import './GA_gear.png';
@@ -33,11 +34,13 @@ export default class App extends React.Component {
     /* bind all our functions */
     this.addTask = this.addTask.bind(this);
     this.updateStateWithNewTask = this.updateStateWithNewTask.bind(this);
-    this.toggleComplete = this.toggleField.bind(this, 'completed');
-    this.toggleDelete = this.toggleField.bind(this, 'deleted');
     this.getAllTasks = this.getAllTasks.bind(this);
     this.login = this.login.bind(this);
     this.hardDelete = this.hardDelete.bind(this);
+
+    /* We'll bind \this\ and curry the function with the first param set */
+    this.toggleComplete = this.toggleField.bind(this, 'completed');
+    this.toggleDelete = this.toggleField.bind(this, 'deleted');
   }
 
 
@@ -114,16 +117,21 @@ export default class App extends React.Component {
   render() {
     return (
       <container>
+
         <header>
           <Nav />
         </header>
+
         <main className="container">
-          <TaskForm saveTask={this.login} size="sm">
+
+          <TaskForm onSubmit={this.login} size="sm">
             <button type="submit" className="btn btn-sm">Login</button>
           </TaskForm>
+
+          {/* Add a Task Form */}
           <section className="jumbotron">
             <h1>Task Manager</h1>
-            <TaskForm saveTask={this.addTask}>
+            <TaskForm onSubmit={this.addTask}>
               <button type="submit" className="btn btn-danger btn-lg">Add Task</button>
             </TaskForm>
           </section>
@@ -139,7 +147,7 @@ export default class App extends React.Component {
                 collection={this.state.tasks}
               >
 
-                <Task onClick={this.toggleComplete} />
+                <ToggleableTask onClick={this.toggleComplete} />
 
               </TaskList>
             </article>
@@ -152,9 +160,9 @@ export default class App extends React.Component {
                 collection={this.state.tasks}
               >
 
-                <Task onClick={this.toggleComplete}>
+                <ToggleableTask onClick={this.toggleComplete}>
                   <IconButton onClick={this.toggleDelete} icon="trash" />
-                </Task>
+                </ToggleableTask>
 
               </TaskList>
             </article>
@@ -175,6 +183,7 @@ export default class App extends React.Component {
             </article>
           </section>
         </main>
+
         <footer>
           <Footer
             reload={this.getAllTasks}

@@ -23,7 +23,7 @@ export default class TaskForm extends React.Component {
     event.preventDefault();
 
     // fired the App's task function
-    this.props.saveTask(this.state.taskForm);
+    this.props.onSubmit(this.state.taskForm);
 
     this.setState({
       taskForm: {
@@ -77,7 +77,7 @@ TaskForm.defaultProps = {
 };
 
 TaskForm.propTypes = {
-  saveTask: React.PropTypes.func.isRequired,
+  onSubmit: React.PropTypes.func.isRequired,
   size:     React.PropTypes.string,
   /* we might have a child, or an array of children*/
   children: React.PropTypes.oneOfType([
