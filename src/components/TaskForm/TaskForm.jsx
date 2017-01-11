@@ -7,8 +7,8 @@ export default class TaskForm extends React.Component {
 
     this.state = {
       taskForm: {
-        name: '',
-        desc: '',
+        name: props.task && props.task.name || '',
+        desc: props.task && props.task.description || '',
       },
     };
 

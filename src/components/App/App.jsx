@@ -19,7 +19,7 @@ export default class App extends React.Component {
 
     this.doError = (e) => {
       // TODO: tie this to the state
-      //console.log(e);
+      console.log(e);
       // AjaxAdapter.clearToken();
     };
 
@@ -39,8 +39,9 @@ export default class App extends React.Component {
     this.hardDelete = this.hardDelete.bind(this);
 
     /* We'll bind \this\ and curry the function with the first param set */
-    this.toggleComplete = this.toggleField.bind(this, 'completed');
-    this.toggleDelete = this.toggleField.bind(this, 'deleted');
+    this.toggleComplete  = this.toggleField.bind(this, 'completed');
+    this.toggleDelete    = this.toggleField.bind(this, 'deleted');
+    this.toggleForm      = this.toggleForm.bind(this);
   }
 
 
@@ -86,6 +87,19 @@ export default class App extends React.Component {
     this.ajaxAdapter.createTask(task)
       .then(this.updateStateWithNewTask)
       .catch(this.doError);
+  }
+
+  toggleForm(id) {
+      // clone existing state
+    const newState = {
+      ...this.state.tasks,
+    };
+
+    newState[id].formOpen = !newState[id].formOpen;
+
+    this.setState({
+      tasks: newState,
+    });
   }
 
   toggleField(field, id) {
@@ -147,7 +161,13 @@ export default class App extends React.Component {
                 collection={this.state.tasks}
               >
 
-                <ToggleableTask onClick={this.toggleComplete} />
+                <ToggleableTask
+                  saveTask={this.updateTask}
+                  closeTaskForm={this.toggleForm}
+                  onClick={this.toggleComplete}
+                >
+                  <IconButton onClick={this.toggleForm} icon="pencil" />
+                </ToggleableTask>
 
               </TaskList>
             </article>
@@ -160,7 +180,12 @@ export default class App extends React.Component {
                 collection={this.state.tasks}
               >
 
-                <ToggleableTask onClick={this.toggleComplete}>
+                <ToggleableTask
+                  saveTask={this.updateTask}
+                  closeTaskForm={this.toggleForm}
+                  onClick={this.toggleComplete}
+                >
+                  <IconButton onClick={this.toggleForm} icon="pencil" />
                   <IconButton onClick={this.toggleDelete} icon="trash" />
                 </ToggleableTask>
 

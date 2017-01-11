@@ -8,16 +8,18 @@ export default function ToggleableTask(props) {
     return (<Task {...props} />);
   }
 
+  const submitTaskForm = (name, desc) => {
+    props.saveTask(props.task.id, name, desc);
+    props.closeTaskForm(props.task.id);
+  };
+
   /* If I'm open, show a form */
   return (
-    <aside className="well well-sm" key={props.id}>
+    <aside className="well well-sm" key={props.task.id}>
       <TaskForm
         size="sm"
         task={props.task}
-        onSubmit={(name, desc) => {
-          props.onSubmit(props.id, name, desc);
-          props.closeTaskForm(props.id);
-        }}
+        onSubmit={submitTaskForm}
       >
 
         {/* We'll add two child buttons */}
@@ -31,7 +33,7 @@ export default function ToggleableTask(props) {
         <button
           type="reset"
           className="btn btn-link btn-sm"
-          onClick={() => props.closeTaskForm(props.id)}
+          onClick={() => props.closeTaskForm(props.task.id)}
         >Cancel</button>
 
       </TaskForm>
@@ -40,9 +42,9 @@ export default function ToggleableTask(props) {
 }
 
 ToggleableTask.propTypes = {
-  id:            React.PropTypes.number.isRequired,
   closeTaskForm: React.PropTypes.func,
   task:          React.PropTypes.shape({
     formOpen: React.PropTypes.bool,
-  }).isRequired,
+    id:       React.PropTypes.number,
+  }),
 };

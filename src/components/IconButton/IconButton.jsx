@@ -4,15 +4,18 @@ export default function IconButton(props) {
   const handleClick = (event) => {
     /* kill the link action here */
     event.stopPropagation();
-
     /* trigger the provided function */
     props.onClick(props.task.id);
     return false;
   };
 
   return (
-    <a className="pull-right" onClick={handleClick}>
-      <span className={`glyphicon glyphicon-${props.icon}`} aria-hidden="true" />
+    <a>
+      <span
+        onClick={handleClick}
+        className={`glyphicon glyphicon-${props.icon}`}
+        aria-hidden="true"
+      />
     </a>
   );
 }
@@ -20,4 +23,7 @@ export default function IconButton(props) {
 IconButton.propTypes = {
   onClick: React.PropTypes.func.isRequired,
   icon:    React.PropTypes.string.isRequired,
+  task:    React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+  }),
 };

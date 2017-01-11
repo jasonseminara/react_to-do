@@ -1,17 +1,17 @@
 import React from 'react';
 
+const cloneItem = (taskID, props, extraProps) => (
+  React.Children.map(props.children, child =>
 
-function cloneItem(taskID, props, extraProps){
-  return React.Children.map( props.children, (child) => {
-
-    /* props.children is READ-ONLY so we have to clone the child in order to give it an ID */
-    return React.cloneElement(child, extraProps,
+    /* props.children is READ-ONLY so we have
+    to clone the child in order to give it an ID */
+    React.cloneElement(child, extraProps,
       cloneItem(taskID, child.props, extraProps)
     )
-  })
-}
+  )
+);
 
-const TaskList = props =>
+const TaskList = props => (
   /* Loop over the collection,
      fiter out items we dont want
      then render using the functions above */
@@ -25,8 +25,7 @@ const TaskList = props =>
       )
     }
   </div>
-
-
+);
 
 TaskList.propTypes = {
   collection: React.PropTypes.object.isRequired,
@@ -34,9 +33,9 @@ TaskList.propTypes = {
 
   /* we might have a child, or an array of children*/
   children:   React.PropTypes.oneOfType([
-                React.PropTypes.arrayOf(React.PropTypes.node),
-                React.PropTypes.node
-              ]),
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
 };
 
 export default TaskList;
