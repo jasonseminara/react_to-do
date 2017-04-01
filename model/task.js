@@ -1,4 +1,3 @@
-const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const pg = require('pg-promise')({/* OPTIONAL Initialization Options */});
 
 
@@ -28,7 +27,7 @@ module.exports = class TaskDB {
   /* POST /tasks */
   /* creates a new task, returns the newly created record */
   static addTask(req, res, next) {
-    console.log('===addTask===',req.body);
+    console.log('===addTask===', req.body);
     db.one(`
       INSERT INTO tasks (name, description)
       VALUES ($/name/, $/desc/) returning *;

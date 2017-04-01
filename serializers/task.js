@@ -10,5 +10,3 @@ module.exports = new JSONAPISerializer('tasks', {
     'updated_at',
   ],
 });
-
-
