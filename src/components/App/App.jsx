@@ -39,9 +39,9 @@ export default class App extends React.Component {
     this.hardDelete = this.hardDelete.bind(this);
 
     /* We'll bind \this\ and curry the function with the first param set */
-    this.toggleComplete  = this.toggleField.bind(this, 'completed');
-    this.toggleDelete    = this.toggleField.bind(this, 'deleted');
-    this.toggleForm      = this.toggleForm.bind(this);
+    this.toggleComplete = this.toggleField.bind(this, 'completed');
+    this.toggleDelete = this.toggleField.bind(this, 'deleted');
+    this.toggleForm = this.toggleForm.bind(this);
   }
 
 
