@@ -6,11 +6,14 @@ const TaskSerializer = require('../serializers/task');
 /* convenience method for sending */
 const sendJSONresp = (req, res) => res.json(TaskSerializer.serialize(res.rows));
 
+tasks.route('/:taskID/toggle')
+  .patch(TaskDB.toggleField, sendJSONresp);
+
 // tasks/:taskID
 // this is more specific than the /tasks, so it goes first
+
 tasks.route('/:taskID')
   .put(TaskDB.updateTask, sendJSONresp)
-  .patch(TaskDB.toggleField, sendJSONresp)
   .delete(TaskDB.deleteTask, (req, res) => res.send(req.params.taskID));
 
 // tasks

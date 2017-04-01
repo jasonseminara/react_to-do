@@ -47,6 +47,8 @@ module.exports = class TaskDB {
     // tID is invented here
     req.body.tID = Number.parseInt(req.params.taskID, 10);
 
+    console.log(req.body)
+
     db.one(`
       UPDATE tasks SET
       $/field:name/ = NOT $/field:name/

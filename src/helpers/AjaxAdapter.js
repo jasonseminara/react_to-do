@@ -47,7 +47,7 @@ export default class AjaxAdapter {
 
   /* LOGIN does not require a token; we receive one */
   login(user) {
-    return fetch(`${this.API_URL}/auth_user`, {
+    return fetch(`/auth_user`, {
       headers: this.jsonHeader,
       method:  'POST',
       body:    JSON.stringify(user),
@@ -57,7 +57,7 @@ export default class AjaxAdapter {
   }
 
   getTasks() {
-    return this.getAuthURL(`${this.API_URL}/tasks`)
+    return this.getAuthURL('/tasks')
     .then(r => r.json())
     /* restructure the received data into the shape we expect */
     .then(this.formatResponse)
@@ -65,7 +65,7 @@ export default class AjaxAdapter {
   }
 
   getTask(id) {
-    return this.getAuthURL(`${this.API_URL}/tasks/${id}`)
+    return this.getAuthURL(`/tasks/${id}`)
     .then(r => r.json())
     /* restructure the received data into the shape we expect */
     .then(this.formatResponse)
@@ -79,7 +79,7 @@ export default class AjaxAdapter {
       description: newTask.desc,
     };
 
-    return fetch(`${this.API_URL}/tasks`, {
+    return fetch(`/tasks`, {
       method:  'POST',
       headers: this.headerWithToken(),
       body:    JSON.stringify(taskFormatted),
@@ -94,7 +94,8 @@ export default class AjaxAdapter {
   }
 
   toggleField(field, id) {
-    return fetch(`${this.API_URL}/tasks/${id}/toggle`, {
+    debugger;
+    return fetch(`/tasks/${id}/toggle`, {
       method:  'PATCH',
       headers: this.headerWithToken(),
       body:    JSON.stringify({ field }),
@@ -105,7 +106,7 @@ export default class AjaxAdapter {
   }
 
   deleteTask(id) {
-    return fetch(`${this.API_URL}/tasks/${id}`, {
+    return fetch(`/tasks/${id}`, {
       method:  'DELETE',
       headers: this.headerWithToken(),
     })
