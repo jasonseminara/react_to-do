@@ -1,4 +1,4 @@
-#Static React
+# Static React
 ### Learning Objectives
  - [ ] Decompose a static HTML design layout into React components
  - [ ] Investigate the difference between Stateful React Classes and Stateless React Functions
@@ -59,7 +59,7 @@ require('../css/styles.css')
 
 We'll need to create a wrapper for our _stateful_ core component that uses React. **We'll be using es6 _class_ syntax to build our components.** 
 
-####Inside `App.jsx` 
+#### Inside `App.jsx` 
 ```
 // import the libs we need
 import React            from 'react';
@@ -122,18 +122,19 @@ export default function Nav(props){
 ``` 
 or in pure es6
 ```
-export default Nav = props=> 
+export default Nav = (props) => {
   <nav>
     {/* slice out the nav from the layout template.*/}
   </nav>
+}
 ```
 
 Make sure to **`import`** this new component in `App.jsx`, and use the appropriate JSX tag in your App. Test your syntax by slowly adding each component one-by-one, and fixing any errors.
 
-> The most common mistake here is to use the HTML `class=` attribute. JSX does **not** like this. Change all the `class=` to `className=`.
+> The most common mistake here is to use the HTML `class=` attribute. JSX does **not** like this. Change all the `class=` attributes to `className=`.
 
 
-###Step 5 The Rest
+### Step 5 The Rest
 
 Repeat the steps above to build out the rest
   1. `Footer`

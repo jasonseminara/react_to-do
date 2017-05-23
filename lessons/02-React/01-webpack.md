@@ -1,17 +1,16 @@
-#5. Exercise 5 
-
-##THE FRONT END!
+# THE FRONT END!
+## React
 
 We're about to implement a front-end rendered completely in the browser.
 
-###Step 1: Webpack Configuration.
+### Step 1: Webpack Configuration.
 Before we do anything, we need to set up **webpack** and our local resources. Webpack compiles our es6, JSX, css, html, and all of our React framework into web- and browser-safe JavaScript. Webpack is not only for React; it's simply a compiler. **Babel** does all the heavy lifting of translating the es6 and JSX into es5.
 > Notice in `package.json` that babel is only used for development. When the code goes live, we'll generate all our assets before deployment. 
 
 > In other words, we don't need Babel in production.
 
-####Babel Config
-I've included the config for babel in a file called `.babelrc`. It contains all the directives for the babel compilation. Notice the part about `transform-strict-mode`. Babel will automatically insert `strict mode` into our final `main.js` so we don't have to deal with that mess over and over again. SWEEET.
+#### Babel Config
+We've included the config for babel in a file called `.babelrc`. It contains all the directives for the babel compilation. Notice the part about `transform-strict-mode`. Babel will automatically insert `strict mode` into our final `main.js` so we don't have to deal with that mess over and over again. SWEEET.
 
 Notice the file `webpack.config.js` in the root of your project. Don't make any changes in this file. This is your _boilerplate_ compiler. 
 
@@ -19,7 +18,7 @@ Notice the file `webpack.config.js` in the root of your project. Don't make any 
 
 The first ting to notice about webpack is that it's not some abstract configuration— it's actually javascript. A scripting language for the configuration of our 'compiler'.
 
-####How does it work?
+#### How does it work?
 ![Dependency Tree](https://cloud.githubusercontent.com/assets/1918677/17348553/e434117e-58e4-11e6-988d-f99c385d1030.png)
 > This is an actual visualization of this current project. That huge amount of stuff in the middle is the React framework.
 > (_see_ https://github.com/webpack/webpack/issues/690)
