@@ -1,14 +1,13 @@
-#Exercise 1. Build a Basic Node.js / Express.js Server with Multiple Routes. 
+# Exercise 1. Build a Basic Node.js / Express.js Server with Multiple Routes. 
 
 Hint: In this directory, touch a file called `server.js`, and `npm i`.
 
 
-##Your server should fulfill the following criteria:
-1. **ALL** JavaScript files **must** `'use strict'` mode
+## Your server should fulfill the following criteria:
 1. Use the following packages:
     1. `morgan` for debugging ('dev' mode is sufficient)
     1. `path` for convenience later.
-1. Your server's port number should NOT be fixed; a user should be able to set the port number when they start up the server, or the environment will provide this for them (_we should default to 3009 if nothing is provided_). 
+1. Your server's port number should NOT be fixed; a user should be able to set the port number when they start up the server, or the environment will provide this for them (_we should default to 3000 if nothing is provided_). 
 1. Your server should `console.log` some diagnostic information when it's started.
 1. It should support the following routes:
     1. `/`: to show a homepage.
