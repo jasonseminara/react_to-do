@@ -5,7 +5,7 @@
  - [ ] Construct application dependencies for Webpack compilation
    
 
-##Step 1. Start Ye Some React (Partner Time!)
+## Step 1. Start Ye Some React (Partner Time!)
 
 **Find a partner with whom you have not yet worked**
 

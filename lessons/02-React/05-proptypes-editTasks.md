@@ -1,29 +1,29 @@
 # Dynamic React, Pt 3
-###Learning Objectives
+### Learning Objectives
  - [ ] Use PropTypes to ensure our components are used correctly
  - [ ] Repurpose existing components in new ways to create new behavior.
 
-##Step 1. PropTypes
+## Step 1. PropTypes
 Now that we have a fairly complex application that passes lots of props around, how can we be sure that our application is behaving properly? How can we be sure that the user supplied all the correct props to our components?
 
-###Prop validation using PropTypes
+### Prop validation using PropTypes
 [React gives us numerous ways](https://facebook.github.io/react/docs/reusable-components.html) to ensure our components are being used correctly. This 'self-testing' and _validation_ is crucial to debugging as your application grows in complexity.
 
 Both React classes and react functional components use the same syntax:
 For example, after the declaration of the class or function:
 
 ```javascript
-TaskForm.propTypes={
+TaskForm.propTypes = {
   addTask: React.PropTypes.func.isRequired
 }
 ```
 
-####You Do (Add PropTypes):
+#### You Do (Add PropTypes):
   1. Take a look at each component you've created and declare the types of their properties, and whether the property is *required*. (See https://facebook.github.io/react/docs/reusable-components.html)
 
 
 
-##Step2. BONUS LAB: Make each `Task` Editable (1 hour)
+## Step 2. BONUS LAB: Make each `Task` Editable (1 hour)
 We should be able to update any of the tasks once they've been created. We should be able to click on a `task`, edit and submit it, all from the same view.
 
 Before we implement any features, let's review how everything is tied together: 
@@ -35,7 +35,7 @@ Our plan is to modify step 3 above, such that:
   - Each filtered `TaskList` renders a `Task` or a `TaskForm` for each task matching the filter, depending on its _toggled_ state.
 
 
-###Stop and Think (Let's Plan)! 
+### Stop and Think (Let's Plan)! 
 Which component should be responsible for toggling this control? Where should the _state_ of the toggled task be held? What are the dis/advantages of giving each Task its own `toggled` state?  
 >Turn and talk: Take 5 minutes and discuss the pros/cons of either storing the state of all the tasks centrally vs having each Task carry its own state? How does this affect the rendering of each item?
 
