@@ -1,4 +1,4 @@
-##Branching Procedures
+## Branching Procedures
 
 These exercises are meant to be done on their own branches. Before starting an exercise, please create a new feature branch from master named after the exercise.
 

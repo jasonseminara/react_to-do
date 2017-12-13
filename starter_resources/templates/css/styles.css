@@ -11,13 +11,16 @@ body{
   color: white!important;
   text-transform: uppercase;
   font-size: large;
+  letter-spacing: -0.05em;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3,h4,h5,h6 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
+  letter-spacing: -0.05em;
 }
-.gaLogo{
+
+.gaLogo {
   display: inline-block;
   background-image: url('../images/GA_gear.png');
   background-position: 0 0;

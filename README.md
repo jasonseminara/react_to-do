@@ -1,8 +1,8 @@
-#React To Do
+# React To Do
 
 A multi-day code-a-long to build a fully-functional CRUD application with React.
 
-##Technologies used and concepts covered
+## Technologies used and concepts covered
 
  - es6
  - Node.js / Express.js
@@ -17,11 +17,11 @@ A multi-day code-a-long to build a fully-functional CRUD application with React.
  - Authentication
 
 
-##System Description
+## System Description
 
 The application will allow the user to create, modify and delete a to-do item. The items will be persisted in a relational database.
 
-###User Stories
+### User Stories
 
  1. As a User, I should be able to add a to-do item into a list.
  2. As a User, I should be able to mark a task as complete.
@@ -30,7 +30,7 @@ The application will allow the user to create, modify and delete a to-do item. T
  5. As a User, I should be able to delete any completed tasks.
  5. As a User, my tasks should persist, such that my previous tasks should display upon each visit.
 
-##How to Get Started
+## How to Get Started
 1. Fork this repo.
 2. Clone your new repo
 3. Add a new remote to receive updates: `git remote add upstream git@github.com:ga-wdi-exercises/react_to-do.git`
