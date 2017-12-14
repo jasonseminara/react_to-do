@@ -10,10 +10,9 @@ Hint: In this directory, touch a file called `server.js`, and `npm i`.
 1. Your server's port number should NOT be fixed; a user should be able to set the port number when they start up the server, or the environment will provide this for them (_we should default to 3000 if nothing is provided_). 
 1. Your server should `console.log` some diagnostic information when it's started.
 1. It should support the following routes:
-    1. `/`: to show a homepage (just a message would be fine).
+    1. `/`: to show a homepage (just a message for now is fine).
     1. `/tasks`: to create a task or list tasks (depending on the HTTP verb used [see [wiki link](https://en.wikipedia.org/wiki/Representational_state_transfer)]).
     1. `/tasks/:id`: to view/edit/delete ONE task.
-    1. `/tasks/:id/edit`: to view the 'edit task' form.
 
 1. All of the above routes (for now) should serve some string to the user indicating that the correct route was successfully accessed, HTTP verb used, and served. 
 1. Use [Postman](http://www.getpostman.com/) to verify that all of your routes are functioning properly.

@@ -13,7 +13,7 @@ Your application should now run exactly as it did in step #1. If it doesn't, **s
 
 As of now, we've only tested our routes to see if they function properly. Now, let's make it do something. _Your server should NOT be serving any HTML, only json_
 
-##Get some data
+## Get some data
 Since we're only building an API and NOT serving/receiving HTML, we'll only need `body-parser` to read the json sent to us.
 
 1. `npm install body-parser --save`

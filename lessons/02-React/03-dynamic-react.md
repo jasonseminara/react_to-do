@@ -25,15 +25,15 @@ export default class App extends React.Component{
 
   // every class gets a constructor.
   // this is where we init the state.
-  constructor() {
+  constructor(props) {
 
     // we also need to wake up our ancestors
-    super();
+    super(props);
 
     // here's our state
     this.state = {
-      tasks : {}
-    }
+      tasks : {},
+    };
   }
 
   // ... other stuff here
