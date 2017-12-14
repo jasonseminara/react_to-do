@@ -11,7 +11,7 @@
 
 We need to plan our React components. React components come in two major varieties: 
   1. Full React Class-based components that represent _state_.
-  2. Light-weight Function-based components that receive _props_, **but no state**. 
+  2. Light-weight Functional components that receive _props_, **but no state**. 
 
 Open `starter_resources/layout.html` in Chrome. 
   1. Diagram the major parts of the application. 
@@ -96,7 +96,7 @@ ReactDOM.render(<App />, document.querySelector('#container'))
 **NOTE** Certain HTML attributes interfere with React. As such, we cannot use `class=` or `for=`, instead use `className=` and `htmlFor=` respectively.
 
 
-##Get organized
+## Get organized
 _NOTE:_ Before we continue, it will be easier to have three (3) terminal windows open to the same directory. This will allow us to work without swapping tons of windows. It might also be a good idea to open your browser to full-screen on another desktop. Also, now would be a good time to make sure your database is running. 
 
 We'll need each one to do the following:

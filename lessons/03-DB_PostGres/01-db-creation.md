@@ -1,6 +1,6 @@
-#3. Exercise 3 
+# 3. Exercise 3 
 
-##The database
+## The database
 
 We need to design a database for our tasks.
 

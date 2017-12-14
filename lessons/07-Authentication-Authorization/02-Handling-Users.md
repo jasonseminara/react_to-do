@@ -1,6 +1,6 @@
 # Handling Users, Generating Tokens
 
-###Learning Objectives
+### Learning Objectives
  - [ ] 
  - [ ] 
  - [ ] 
@@ -9,8 +9,8 @@
 
 What happens when a new user is created? What should we do when that user comes back? How will we know if the user is allowed to come back?
 
-##Exercises
-###Step 1: Create Users
+## Exercises
+### Step 1: Create Users
 
 The top of `models/user.js` should look like this:
 ```

@@ -63,12 +63,12 @@ The middle of the file contains all the `plugin` definitions. One plugin of note
 
 ```javascript
 new HtmlWebpackPlugin({
-      title: 'Tasks',
-      xhtml: true,
-      inject: false,
-      template: require('html-webpack-template'),
-      appMountId: 'container'
-    }),
+  title: 'Tasks',
+  xhtml: true,
+  inject: false,
+  template: require('html-webpack-template'),
+  appMountId: 'container'
+}),
 ```
 >This dynamically builds out an HTML file for us based on an internal template. We can even tell it to generate a `<div id="container">` from which to hang our react app.
 

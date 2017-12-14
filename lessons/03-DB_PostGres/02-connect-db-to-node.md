@@ -1,4 +1,4 @@
-#4. Exercise 4 
+# 4. Exercise 4 
 
 ## Connect to the DB
  1. Create a `/models/task.js` file. This file will encapsulate all of your db interactions.
@@ -19,12 +19,11 @@ const config = process.env.DATABASE_URL ||{
 
 const _db = pg(config);
 ```
- 5. Create `.env` file in the root of your server directory with the following contents (use your own info here with a real password)
+ 5. Create `.env` file in the root of your server directory with the following contents 
     
 ```
 DB_HOST=localhost
 DB_USER=jseminara
-DB_PASS=*********
 DB_NAME=taskdb
 DB_PORT=5432
 NODE_ENV=development
@@ -33,9 +32,9 @@ NODE_ENV=development
  6. At the top of your `server.js`, add the following:
  
 ```
+  require('dotenv').config();
   const env         = process.env.NODE_ENV || 'development';
-  const DEV         = env==='development';
-  const dotenv      = (DEV) ? require('dotenv').config() : undefined;
+  const DEV         = env === 'development';
 ```
 
 

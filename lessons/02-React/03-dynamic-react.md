@@ -79,7 +79,7 @@ ReactDOM.render(<App/>, document.querySelector('#container'))
 
 ```
 
-### Please Explain
+### Please Explain!
 
 Notice that our `App` has a `constructor` which is the method that runs when the class is instantiated. This is the perfect place to initialize our _state_. Our App is the container for our application and should be the only thing that manages the state for our app. The rest of our components will simply receive `props`, or references to methods (_mutators_ and/or _accessors_ of the state). 
 

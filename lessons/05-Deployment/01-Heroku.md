@@ -7,7 +7,7 @@ Before starting this lesson, students should already have a Heroku account and b
 
 _We'll be deploying our app to Heroku. We'll have a few things to do before we can successfully deploy._
 
-##Todo
+## Todo
   - Discuss production runtime environment
   - Security
   - differences between devDependencies and dependencies

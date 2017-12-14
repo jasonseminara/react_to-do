@@ -1,6 +1,6 @@
 # Create a User Model
 
-###Learning Objectives
+### Learning Objectives
  - [ ] Use Bcrypt to hash passwords for additional security
  - [ ] Differentiate server sessions and **token-based authentication**
  - [ ] Compare hashing an encryption
@@ -70,7 +70,7 @@ We won't be able to manually insert data into users since we don't know how to h
     3. Don't forget to export the router within each router file:
 
 
-###Step 3. Creating Users
+### Step 3. Creating Users
 
 The top of `models/user.js` should look like this:
 ```
